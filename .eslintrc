@@ -1,0 +1,9 @@
+{
+  "rules": {
+      "quotes": [1, "single"],
+      "linebreak-style": [0]
+  },
+  "globals": {
+    "jquery": true
+  },
+}
