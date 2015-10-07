@@ -1,68 +1,82 @@
-(function(window, $) {
-    'use strict';
+(function(window, document, $) {
+  'use strict';
 
+  var range = function() {
 
-    var range = function() {
-
-        var my = {},
-            _sliderCircle = $('.range__circle'),
-            _slider = _sliderCircle.closest('.range'),
-            _mouseOffsetX = 0;
-
-        /* ------- Setup listeners  ------- */
-        _sliderCircle.on('mousedown', _startSlide);
-        _sliderCircle.on('mouseup', _stopSlide);
-
-        publicInterface();
-        init();
-
-        function init() {}
-
-        function publicInterface() {
-            my = $.extend(my, {
-                getOpacityValue: function(range) {
-                    _sliderCircle = range; // TODO it is doesn't change _sliderCircle, why ?
-                    _moveSlider();
-                }
-            });
-        }
-
-        function _getSliderWidth() {
-            return _sliderCircle.closest('.range').width();
-        }
-
-
-        function _getOpacity() {
-            var sliderWidth =_getSliderWidth(),
-                circlePosition = _sliderCircle.position().left,
-                min = 0,
-                max = sliderWidth;
-
-            _moveSlider();
-        }
-
-        function _startSlide() {
-            console.log(_mouseOffsetX);
-            _sliderCircle.css({'transform':'translate3d(' + _mouseOffsetX + 'px' + ', 0, 0)'});
-        }
-
-        function _stopSlide() {
-           // _sliderCircle.css({'position':'static'});
-        }
-
-        function _moveSlider() {
-            _slider.on('mousemove', function(e) {
-                _mouseOffsetX = e.offsetX;
-            });
-        }
-
-
-        return my;
+    var my = {};
+    var options = {
+      eps: 1000
     };
+    var $rangeEl = null;
+    var $circleEl = null;
+    var $document = null;
+    var rangeBox = null;
+    var leftEdge = 0;
+    var rangeWidth = 0;
+    var radius = 0;
 
-    // transport
-    window.range = range();
+    publicInterface();
+    init();
 
-})(window, jQuery);
+    function init() {
+      $rangeEl = $('.range');
+      $circleEl = $rangeEl.find('.range_circle');
+      rangeBox =  $rangeEl[0].getBoundingClientRect();
+      $document = $(document);
+      leftEdge = rangeBox.left,
+      rangeWidth = rangeBox.width,
+      radius = parseInt(getComputedStyle($circleEl[0]).width) / 2
 
-range.getOpacityValue($('.range__circle'));
+      $circleEl.on('mousedown', onMousedown);
+    }
+
+    function onMousedown(e) {
+      $document.on('mousemove', onMousemove);
+      $document.on('mouseup', onMouseup);
+    }
+
+    function onMouseup(e) {
+      $document.off('mousemove', onMousemove);
+      $document.off('mouseup', onMouseup);
+    }
+
+    function onMousemove(e) {
+      var x = e.pageX - leftEdge;
+
+      if (x < 0) {
+        x = 0;
+      } else if (x > rangeWidth) {
+        x = rangeWidth;
+      }
+
+      getValue(x);
+      moveCircle(x);
+    }
+
+    function getValue(position) {
+      var result = (Math.round((position / rangeWidth) * options.eps) ) / options.eps;
+
+      my.getValue(result);
+    }
+
+    function moveCircle(position) {
+      $circleEl[0].style.left = (position - radius) + 'px';
+    }
+
+    function publicInterface() {
+      my = $.extend(my, {
+        setEps: function(eps) {
+          options.eps = eps;
+        }
+      });
+    }
+
+    return my;
+  };
+
+  window.range = range();
+})(window, document, jQuery);
+
+range.getValue = function(value) {
+  console.log(value);
+};

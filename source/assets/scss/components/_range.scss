@@ -1,17 +1,21 @@
 .range {
-    margin: 15px;
     position: relative;
-    width: 200px;
-    height: 15px;
+    height: 3px;
     background: red;
 
-    &__circle {
+    &_circle {
+        $size: 20;
 
-        left: 50px;
-        top: -7px;
-        width: 20px;
-        height: 20px;
+        position: absolute;
+        left: -($size / 2) * 1px;
+        top: 50%;
+
+        width: $size * 1px;
+        height: $size * 1px;
+        margin-top: -($size / 2) * 1px;
+
         border-radius: 50%;
         background: green;
+        cursor: pointer;
     }
 }
