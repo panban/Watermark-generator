@@ -4,7 +4,8 @@
 
     var range = function() {
 
-        var my = {};
+        var my = {},
+            _sliderCircle = [];
 
         publicInterface();
         init();
@@ -14,14 +15,20 @@
         function publicInterface() {
             my = $.extend(my, {
                 getOpacityValue: function(range) {
-                    this.range = range;
+                    _sliderCircle = range;
                     _moveSlider();
                 }
             });
         }
+
+        /* ----- Узнаем ширину ползунка ----- */
+        function _getSliderWidth() {
+            return _sliderCircle.closest('.range').width();
+        }
         
         function _moveSlider() {
-            console.log(my.range);
+            var sliderWidth =_getSliderWidth();
+            console.log(sliderWidth);
         }
 
         return my;
