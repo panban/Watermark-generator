@@ -9,8 +9,8 @@
             _slider = _sliderCircle.closest('.range');
 
         /* ------- Setup listeners  ------- */
-        _sliderCircle.on('mousedown', _downSlider);
-        _sliderCircle.on('mouseup', _upSlider);
+        _sliderCircle.on('mousedown', _startSlide);
+        _sliderCircle.on('mouseup', _stopSlide);
 
         publicInterface();
         init();
@@ -26,14 +26,11 @@
             });
         }
 
-
-        /* ----- Узнаем ширину ползунка ----- */
         function _getSliderWidth() {
             return _sliderCircle.closest('.range').width();
         }
 
 
-        /* ------- Перемещение ползунка -------- */
         function _getOpacity() {
             var sliderWidth =_getSliderWidth(),
                 circlePosition = _sliderCircle.position().left,
@@ -43,11 +40,11 @@
             _moveSlider();
         }
 
-        function _downSlider() {
+        function _startSlide() {
             _sliderCircle.css({'position':'absolute'});
         }
 
-        function _upSlider() {
+        function _stopSlide() {
             console.log('hi');
             _sliderCircle.css({'position':'static'});
         }
