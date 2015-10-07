@@ -41,13 +41,11 @@
     function onMousedown(e) {
       $document.on('mousemove', onMousemove);
       $document.on('mouseup', onMouseup);
-      e.stopPropagation();
     }
 
     function onMouseup(e) {
       $document.off('mousemove', onMousemove);
       $document.off('mouseup', onMouseup);
-      e.stopPropagation();
     }
 
     function onMousemove(e) {
@@ -64,7 +62,7 @@
     }
 
     function countValue(position) {
-      var result = (Math.round((position / rangeWidth) * options.eps) ) / options.eps;
+      var result = (Math.round((position / rangeWidth) * options.eps)) / options.eps;
 
       my.getValue(result);
     }
