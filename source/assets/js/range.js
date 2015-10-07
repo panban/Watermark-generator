@@ -6,7 +6,8 @@
 
         var my = {},
             _sliderCircle = $('.range__circle'),
-            _slider = _sliderCircle.closest('.range');
+            _slider = _sliderCircle.closest('.range'),
+            _mouseOffsetX = 0;
 
         /* ------- Setup listeners  ------- */
         _sliderCircle.on('mousedown', _startSlide);
@@ -41,23 +42,18 @@
         }
 
         function _startSlide() {
-            _sliderCircle.css({'position':'absolute'});
+            console.log(_mouseOffsetX);
+            _sliderCircle.css({'transform':'translate3d(' + _mouseOffsetX + 'px' + ', 0, 0)'});
         }
 
         function _stopSlide() {
-            console.log('hi');
-            _sliderCircle.css({'position':'static'});
+           // _sliderCircle.css({'position':'static'});
         }
 
         function _moveSlider() {
-
             _slider.on('mousemove', function(e) {
-                _sliderCircle.css({
-                    'left' : e.offsetX + 'px'
-                });
-                console.log('move');
+                _mouseOffsetX = e.offsetX;
             });
-
         }
 
 
