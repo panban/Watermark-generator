@@ -13,10 +13,15 @@
 
         function publicInterface() {
             my = $.extend(my, {
-                getWm: function(path) {
-                    console.log('rangedd');
+                getOpacityValue: function(range) {
+                    this.range = range;
+                    _moveSlider();
                 }
             });
+        }
+        
+        function _moveSlider() {
+            console.log(my.range);
         }
 
         return my;
@@ -27,4 +32,4 @@
 
 })(window, jQuery);
 
-range.getWm();
+range.getOpacityValue($('.range'));

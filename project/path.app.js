@@ -3,6 +3,7 @@
 
   var app = [
     './source/assets/js/table.js',
+    './source/assets/js/range.js',
     './source/assets/js/app.js'
   ];
 

@@ -47,35 +47,3 @@ setTimeout(function() {
   fileUpload.success();
 }, 1000);
 
-
-
-(function(window, $) {
-  'use strict';
-
-  
-  var range = function() {
-
-    var my = {};
-
-    publicInterface();
-    init();
-
-    function init() {}
-
-    function publicInterface() {
-      my = $.extend(my, {
-        getWm: function(name) {
-          console.log(name);
-        }
-      });
-    }
-
-    return my;
-  };
-
-  // transport
-  window.range = range();
-
-})(window, jQuery);
-
-range.getWm('Hello, I\'m range');
