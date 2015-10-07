@@ -28,16 +28,26 @@
       radius = parseInt(getComputedStyle($circleEl[0]).width) / 2
 
       $circleEl.on('mousedown', onMousedown);
+      $rangeEl.on('click', onRangeClick);
+    }
+
+    function onRangeClick(e) {
+      var x = e.pageX - leftEdge;
+
+      countValue(x);
+      moveCircle(x);
     }
 
     function onMousedown(e) {
       $document.on('mousemove', onMousemove);
       $document.on('mouseup', onMouseup);
+      e.stopPropagation();
     }
 
     function onMouseup(e) {
       $document.off('mousemove', onMousemove);
       $document.off('mouseup', onMouseup);
+      e.stopPropagation();
     }
 
     function onMousemove(e) {
@@ -49,11 +59,11 @@
         x = rangeWidth;
       }
 
-      getValue(x);
+      countValue(x);
       moveCircle(x);
     }
 
-    function getValue(position) {
+    function countValue(position) {
       var result = (Math.round((position / rangeWidth) * options.eps) ) / options.eps;
 
       my.getValue(result);
