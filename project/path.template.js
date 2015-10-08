@@ -2,7 +2,7 @@
   'use strict';
 
   var template = [
-    './source/templates/**/*.jade'
+    './source/templates/**/*.jade',
     '!./source/templates/**/_*.jade'
   ];
 

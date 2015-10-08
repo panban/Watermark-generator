@@ -14,6 +14,7 @@
     var leftEdge = 0;
     var rangeWidth = 0;
     var radius = 0;
+    var activeClass = 'range_circle--active';
 
     publicInterface();
     init();
@@ -28,7 +29,7 @@
       radius = parseInt(getComputedStyle($circleEl[0]).width) / 2
 
       $circleEl.on('mousedown', onMousedown);
-      $rangeEl.on('click', onRangeClick);
+      $rangeEl.on('mousedown', onMousedown);
     }
 
     function onRangeClick(e) {
@@ -39,11 +40,14 @@
     }
 
     function onMousedown(e) {
+      onMousemove(e);
+      $circleEl.addClass(activeClass);
       $document.on('mousemove', onMousemove);
       $document.on('mouseup', onMouseup);
     }
 
     function onMouseup(e) {
+      $circleEl.removeClass(activeClass);
       $document.off('mousemove', onMousemove);
       $document.off('mouseup', onMouseup);
     }
