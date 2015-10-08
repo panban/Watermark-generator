@@ -68,7 +68,7 @@
     function countValue(position) {
       var result = (Math.round((position / rangeWidth) * options.eps)) / options.eps;
 
-      my.getValue(result);
+      my.change(result);
     }
 
     function moveCircle(position) {
@@ -89,6 +89,6 @@
   window.range = range();
 })(window, document, jQuery);
 
-range.getValue = function(value) {
+range.change = function(value) {
   console.log(value);
 };
