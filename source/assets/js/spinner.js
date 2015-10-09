@@ -24,7 +24,7 @@
     var direction = target.getAttribute('data-direction');
 
     this.changeValue(direction);
-    this.timerId = repeat(100, this.setValue.bind(this));
+    this.timerId = repeat(100, this.setValue.bind(this), this);
   }
 
   function onMouseup(e) {
@@ -38,18 +38,18 @@
   function repeat(ms, handler, context) {
     // TODO: I fucked this shit.
 
- /*   var ms = ms || 500;
+    var ms = ms || 500;
     var timerId;
     handler = handler.bind(context || null);
 
-    // clearTimeout(this.timerId);
+    clearTimeout(context.timerId); // sometimes it's undefined, why ???????????
     timerId = delay(function() {
       repeat(40, handler)
     }, ms);
 
     handler();
 
-    return timerId;*/
+    return timerId;
   }
 
   var fn = Spinner.prototype;

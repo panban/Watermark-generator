@@ -24,19 +24,12 @@
       $circleEl = $rangeEl.find('.range_circle');
       rangeBox =  $rangeEl[0].getBoundingClientRect();
       $document = $(document);
-      leftEdge = rangeBox.left,
-      rangeWidth = rangeBox.width,
-      radius = parseInt(getComputedStyle($circleEl[0]).width) / 2
+      leftEdge = rangeBox.left;
+      rangeWidth = rangeBox.width;
+      radius = parseInt(getComputedStyle($circleEl[0]).width) / 2;
 
       $circleEl.on('mousedown', onMousedown);
       $rangeEl.on('mousedown', onMousedown);
-    }
-
-    function onRangeClick(e) {
-      var x = e.pageX - leftEdge;
-
-      countValue(x);
-      moveCircle(x);
     }
 
     function onMousedown(e) {
