@@ -9,6 +9,7 @@
     };
     var $rangeEl = null;
     var $circleEl = null;
+    var $progressEl = null;
     var $document = null;
     var rangeBox = null;
     var leftEdge = 0;
@@ -22,34 +23,33 @@
     function init() {
       $rangeEl = $('.range');
       $circleEl = $rangeEl.find('.range_circle');
+      $progressEl = $rangeEl.find('.range_progress');
       rangeBox =  $rangeEl[0].getBoundingClientRect();
       $document = $(document);
       leftEdge = rangeBox.left,
       rangeWidth = rangeBox.width,
-      radius = parseInt(getComputedStyle($circleEl[0]).width) / 2
+      radius = $circleEl[0].offsetWidth / 2;
 
       $circleEl.on('mousedown', onMousedown);
       $rangeEl.on('mousedown', onMousedown);
-    }
 
-    function onRangeClick(e) {
-      var x = e.pageX - leftEdge;
-
-      countValue(x);
-      moveCircle(x);
+      // TODO: refactor.
+      $circleEl[0].ondragstart = function() {
+        return false;
+      };
     }
 
     function onMousedown(e) {
-      onMousemove(e);
-      $circleEl.addClass(activeClass);
-      $document.on('mousemove', onMousemove);
       $document.on('mouseup', onMouseup);
+      $document.on('mousemove', onMousemove);
+      $circleEl.addClass(activeClass);
+      onMousemove(e);
     }
 
     function onMouseup(e) {
-      $circleEl.removeClass(activeClass);
       $document.off('mousemove', onMousemove);
       $document.off('mouseup', onMouseup);
+      $circleEl.removeClass(activeClass);
     }
 
     function onMousemove(e) {
@@ -73,6 +73,7 @@
 
     function moveCircle(position) {
       $circleEl[0].style.left = (position - radius) + 'px';
+      $progressEl[0].style.width = position + 'px';
     }
 
     function publicInterface() {
@@ -90,5 +91,5 @@
 })(window, document, jQuery);
 
 range.change = function(value) {
-  console.log(value);
+  // console.log(value);
 };

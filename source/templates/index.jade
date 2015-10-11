@@ -10,18 +10,71 @@ html
     // favicon block start
     // favicon block end
     link(rel='stylesheet', href='/assets/css/app%=suffix=%.css%=version=%')
-    <!--[if lt IE 9]>
-    script(src='http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js')
-    <![endif]-->
   body
-    <!--[if lt IE 8]>
-    <p class="browsehappy">Вы используете <strong>устаревший</strong> браузер. Пожалуйста <a href='http://browsehappy.com/'>обновите его.</a></p>
+    <!--[if lt IE 10]>
+    <p class="browserhappy">Вы используете устаревший браузер. <br> Пожалуйста <a href='http://browsehappy.com/'>обновите его.</a></p>
     <![endif]-->
 
-    .box
-        include _range
-    .box
-        include _spinner
+    .container
+        .container_base
+            .workspace
+                h1.workspace_header
+                    span.workspace_title Генератор водяных знаков
+                .workspace_bord
+        .container_side
+            .control
+                .control_title Настройки
+                .control_block
+                    .uploader-label Исходное изображение
+                    label.uploader
+                        .uploader_field Изображение отсутствует
+                        a.uploader_button
+                        input.uploader_input(type="file")
+
+                    .uploader-label Водяной знак
+                    label.uploader
+                        .uploader_field Изображение отсутствует
+                        a.uploader_button
+                        input.uploader_input(type="file")
+                .control_block
+                    .control_block-title Положение
+                    .position
+                        .position_block
+                            .position-area
+                                a.position-area--current(href="#")
+                                a(href="#")
+                                a(href="#")
+                                a(href="#")
+                                a(href="#")
+                                a(href="#")
+                                a(href="#")
+                                a(href="#")
+                                a(href="#")
+                        .position_block
+                            .position_spinner
+                                .spinner
+                                    .spinner_axis X
+                                    input.spinner_input(type="text")
+                                    .spinner_control
+                                        .spinner_button.spinner_button--increase 1
+                                        .spinner_button.spinner_button--reduce 2
+                            .position_spinner
+                                .spinner
+                                    .spinner_axis Y
+                                    input.spinner_input(type="text")
+                                    .spinner_control
+                                        .spinner_button.spinner_button--increase 1
+                                        .spinner_button.spinner_button--reduce 2
+                .control_block
+                    .control_block-title Прозрачность
+                    include _range
+                .control_button-group
+                    button.control_button-reset Сброс
+                    button.control_button-download Скачать
+                
+    footer.footer
+        .footer_container
+            p.footer_copy © 2015, Это мой сайт, пожалуйста, не копируйте и не воруйте его
 
     script(src='/assets/js/foundation.min.js%=version=%')
     script(src='/assets/js/app%=suffix=%.js%=version=%')

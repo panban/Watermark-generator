@@ -1,0 +1,24 @@
+.position-area {
+  $partSize: 34;
+
+  @extend %clearfix;
+  width: ($partSize * 3) * 1px;
+  padding: 1px 0 0 1px;
+
+  a {
+    float: left;
+    width: $partSize * 1px;
+    height: $partSize * 1px;
+    border: 1px solid #9eb2c0;
+    background: #dbe1e8;
+    margin: -1px 0 0 -1px;
+
+    &:hover:not(.position-area--current) {
+      background: darken(#dbe1e8, 5%);
+    }
+
+    &.position-area--current {
+      background: #f97e76;
+    }
+  }
+}

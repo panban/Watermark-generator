@@ -1,0 +1,21 @@
+.workspace {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 23px 25px;
+  flex: auto;
+
+  &_header {
+    margin: 0 0 56px 0;
+  }
+
+  &_title {
+    font-size: 33px;
+    color: #fff;
+  }
+
+  &_bord {
+    background: #fff url('/assets/img/bg_transparency.jpg');
+    height: 535px;
+  }
+}

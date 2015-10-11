@@ -12,25 +12,29 @@
 //-------------------------------------------
 @import
   "base/myreset",
+  "base/base",
   "base/fonts";
 
 // ------------------------------------------
   // Layout
 // ------------------------------------------
 @import
-  "layout/tools",
-  "layout/grid";
+  "layout/tools";
 
 // ------------------------------------------
   // Modules
 // ------------------------------------------
 @import
   "components/divider",
-  "components/range";
+  "components/range",
+  "components/workspace",
+  "components/control",
+  "components/footer",
+  "components/position-area",
+  "components/uploader";
 
 // ------------------------------------------
   // Pages
 //-------------------------------------------
 @import
   "pages/index";
-  

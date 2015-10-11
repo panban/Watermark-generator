@@ -1,23 +1,6 @@
 // ------------------------------------------
   // Base
 //-------------------------------------------
-$baseColor: #262626;
-$baseFontSize: 16px;
-$baseFontFamily: Arial, sans-serif;
-
-*{
-  box-sizing: border-box;
-}
-
-html, body{
-  min-height: 100%;
-}
-
-body{
-  font: $baseFontSize/1 $baseFontFamily;
-  background: #fff;
-  color: $baseColor;
-}
 
 a{
   background: transparent;

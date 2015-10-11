@@ -34,6 +34,7 @@ $.gulp.task('default', function() {
       'js:foundation',
       'scss:process',
       'template:jade',
+      'copy:image',
       'copy:resource',
       'copy:things'
     ],
@@ -52,6 +53,7 @@ $.gulp.task('build', function(cb) {
       'js:foundation',
       'scss:release',
       'template:jade',
+      'copy:image',
       'copy:resource',
       'copy:things'
     ],

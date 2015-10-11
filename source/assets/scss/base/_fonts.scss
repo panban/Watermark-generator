@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'roboto_light';
+  // src: url('/assets/fonts/roboto/roboto_light.eot'); /* IE9 Compat Modes */
+  src: 
+  // url('/assets/fonts/roboto/roboto_light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       // url('/assets/fonts/roboto/roboto_light.woff2') format('woff2'), /* Super Modern Browsers */
+       // url('/assets/fonts/roboto/roboto_light.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/assets/fonts/roboto/roboto_light.ttf')  format('truetype'); /* Safari, Android, iOS */
+       // url('/assets/fonts/roboto/roboto_light.svg#svgFontName') format('svg'); /* Legacy iOS */
+}

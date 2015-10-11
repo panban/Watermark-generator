@@ -1,0 +1,20 @@
+*{
+  box-sizing: border-box;
+}
+
+html, body{
+  min-height: 100%;
+}
+
+html {
+  position: relative;
+}
+
+body {
+  background: url('/assets/img/bg_page.jpg') no-repeat fixed;
+  background-size: cover;
+  font-family: 'roboto_light';
+  color: #2e3641;
+  padding-top: 60px;
+  padding-bottom: $footerHeight * 1px;
+}

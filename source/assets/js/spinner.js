@@ -1,4 +1,4 @@
-(function(window, document, $) {
+/*(function(window, document, $) {
   'use strict';
 
   var options = {
@@ -38,7 +38,7 @@
   function repeat(ms, handler, context) {
     // TODO: I fucked this shit.
 
- /*   var ms = ms || 500;
+    var ms = ms || 500;
     var timerId;
     handler = handler.bind(context || null);
 
@@ -49,7 +49,7 @@
 
     handler();
 
-    return timerId;*/
+    return timerId;
   }
 
   var fn = Spinner.prototype;
@@ -79,4 +79,4 @@
 var spinner1 = new Spinner($('.spinner'), {
   min: 0,
   max: 10
-});
+});*/

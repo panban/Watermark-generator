@@ -1,0 +1,19 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  &_container {
+    width: 960px;
+    margin: auto;
+  }
+
+  &_copy {
+    height: $footerHeight * 1px;
+    font-size: 12px;
+    line-height: $footerHeight * 1px;
+    text-align: center;
+    color: #fff;
+  }
+}

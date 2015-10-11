@@ -1,0 +1,23 @@
+.control {
+  width: 261px;
+
+  &_title {
+    padding: 23px 10px 17px;
+    text-align: center;
+    font-size: 26px;
+  }
+
+  &_block {
+    padding: 15px 21px 31px;
+    border-bottom: 1px solid #f4c3c2;
+  }
+
+  &_block-title {
+    margin: 0 0 35px 0;
+    font-size: 14px;
+  }
+
+  &_button-group {
+    padding: 50px 20px 0;
+  }
+}

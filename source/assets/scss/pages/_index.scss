@@ -1,4 +1,84 @@
-.box {
-  width: 300px;
-  padding: 40px;
+.browserhappy {
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 80px 50px;
+  border-bottom: 2px solid #ccc;
+  font-size: 23px;
+  line-height: 1.5em;
+  text-align: center;
+  background: #eee;
+}
+
+.container {
+  display: flex;
+  width: 960px;
+  margin: auto;
+
+  &_base {
+    display: flex;
+    flex-grow: 1;
+    background: rgba(46, 54, 65, .6);
+  }
+
+  &_side {
+    flex-shrink: 0;
+    background: #f1f1f5;
+  }
+}
+
+.uploader-label {
+  font-size: 14px;
+  margin: 0 0 7px 0;
+}
+
+.position {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &_block {
+    flex-shrink: 0;
+  }
+
+  &_spinner {
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+
+.spinner {
+  padding-right: 8px;
+
+  &_axis,
+  &_control,
+  &_input {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &_axis {
+    font-size: 16px;
+    padding-right: 3px;
+  }
+
+  &_input {
+    width: 45px;
+    height: 45px;
+    border: 1px solid #9eb2c0;
+    text-align: center;
+    font: 24px 'roboto_light';
+    color: #444a53;
+    background: transparent;
+    border-radius: 2px;
+  }
+
+  &_control {
+
+  }
 }

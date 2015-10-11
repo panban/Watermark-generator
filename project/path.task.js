@@ -13,7 +13,8 @@
     './project/tasks/service.server.js',
     './project/tasks/service.clean.js',
     './project/tasks/copy.resource.js',
-    './project/tasks/copy.things.js'
+    './project/tasks/copy.things.js',
+    './project/tasks/copy.image.js'
   ];
 
   module.exports = task;
