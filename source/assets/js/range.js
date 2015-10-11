@@ -1,93 +1,91 @@
 (function(window, document, $) {
   'use strict';
 
-  var range = function() {
+  var my = {},
+      options = {
+        eps: 1000
+      },
+      $rootEl = null,
+      $handleEl = null,
+      $progressEl = null,
+      $document = null,
+      rangeBox = null,
+      leftEdge = 0,
+      rangeWidth = 0,
+      radius = 0,
+      activeClass = 'range_handle--active';
 
-    var my = {};
-    var options = {
-      eps: 1000
+  publicInterface();
+  init();
+  attachEvents();
+
+  function init() {
+    $rootEl = $('.range');
+    $handleEl = $rootEl.find('.range_handle');
+    $progressEl = $rootEl.find('.range_progress');
+    rangeBox =  $rootEl[0].getBoundingClientRect();
+    $document = $(document);
+    leftEdge = rangeBox.left,
+    rangeWidth = rangeBox.width,
+    radius = $handleEl[0].offsetWidth / 2;
+  }
+
+  function attachEvents() {
+    $handleEl.on('mousedown', onMousedown);
+    $rootEl.on('mousedown', onMousedown);
+
+    // TODO: refactor.
+    $handleEl[0].ondragstart = function() {
+      return false;
     };
-    var $rangeEl = null;
-    var $circleEl = null;
-    var $progressEl = null;
-    var $document = null;
-    var rangeBox = null;
-    var leftEdge = 0;
-    var rangeWidth = 0;
-    var radius = 0;
-    var activeClass = 'range_circle--active';
+  }
 
-    publicInterface();
-    init();
+  function onMousedown(e) {
+    $document.on('mouseup', onMouseup);
+    $document.on('mousemove', onMousemove);
+    $handleEl.addClass(activeClass);
+    onMousemove(e);
+  }
 
-    function init() {
-      $rangeEl = $('.range');
-      $circleEl = $rangeEl.find('.range_circle');
-      $progressEl = $rangeEl.find('.range_progress');
-      rangeBox =  $rangeEl[0].getBoundingClientRect();
-      $document = $(document);
-      leftEdge = rangeBox.left,
-      rangeWidth = rangeBox.width,
-      radius = $circleEl[0].offsetWidth / 2;
+  function onMouseup(e) {
+    $document.off('mousemove', onMousemove);
+    $document.off('mouseup', onMouseup);
+    $handleEl.removeClass(activeClass);
+  }
 
-      $circleEl.on('mousedown', onMousedown);
-      $rangeEl.on('mousedown', onMousedown);
+  function onMousemove(e) {
+    var x = e.pageX - leftEdge;
 
-      // TODO: refactor.
-      $circleEl[0].ondragstart = function() {
-        return false;
-      };
+    if (x < 0) {
+      x = 0;
+    } else if (x > rangeWidth) {
+      x = rangeWidth;
     }
 
-    function onMousedown(e) {
-      $document.on('mouseup', onMouseup);
-      $document.on('mousemove', onMousemove);
-      $circleEl.addClass(activeClass);
-      onMousemove(e);
-    }
+    countValue(x);
+    moveHangle(x);
+  }
 
-    function onMouseup(e) {
-      $document.off('mousemove', onMousemove);
-      $document.off('mouseup', onMouseup);
-      $circleEl.removeClass(activeClass);
-    }
+  function countValue(position) {
+    var result = (Math.round((position / rangeWidth) * options.eps)) / options.eps;
 
-    function onMousemove(e) {
-      var x = e.pageX - leftEdge;
+    my.change(result);
+  }
 
-      if (x < 0) {
-        x = 0;
-      } else if (x > rangeWidth) {
-        x = rangeWidth;
+  function moveHangle(position) {
+    $handleEl[0].style.left = (position - radius) + 'px';
+    $progressEl[0].style.width = position + 'px';
+  }
+
+  function publicInterface() {
+    my = $.extend(my, {
+      setEps: function(eps) {
+        options.eps = eps;
       }
+    });
+  }
 
-      countValue(x);
-      moveCircle(x);
-    }
-
-    function countValue(position) {
-      var result = (Math.round((position / rangeWidth) * options.eps)) / options.eps;
-
-      my.change(result);
-    }
-
-    function moveCircle(position) {
-      $circleEl[0].style.left = (position - radius) + 'px';
-      $progressEl[0].style.width = position + 'px';
-    }
-
-    function publicInterface() {
-      my = $.extend(my, {
-        setEps: function(eps) {
-          options.eps = eps;
-        }
-      });
-    }
-
-    return my;
-  };
-
-  window.range = range();
+  window.range = my;
 })(window, document, jQuery);
 
 range.change = function(value) {

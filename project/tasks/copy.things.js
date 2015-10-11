@@ -9,8 +9,8 @@
         .pipe($.gulp.dest($.config.root + '/assets/fonts'))
 
       if ($.debug) {
-        // $.gulp.src('./source/assets/js/app.templates.js')
-        //   .pipe($.gulp.dest($.config.root + '/assets/js'))
+        $.gulp.src('./source/assets/demo/**.*')
+          .pipe($.gulp.dest($.config.root + '/demo'))
       }
     });
   };

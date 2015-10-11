@@ -14,8 +14,10 @@
     color: #fff;
   }
 
-  &_bord {
-    background: #fff url('/assets/img/bg_transparency.jpg');
+  &_board {
+    position: relative;
+    overflow: hidden;
     height: 535px;
+    background: #fff url('/assets/img/bg_transparency.jpg');
   }
 }

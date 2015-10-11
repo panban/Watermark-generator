@@ -15,12 +15,12 @@ html
     <p class="browserhappy">Вы используете устаревший браузер. <br> Пожалуйста <a href='http://browsehappy.com/'>обновите его.</a></p>
     <![endif]-->
 
-    .container
+    main.container
         .container_base
             .workspace
                 h1.workspace_header
                     span.workspace_title Генератор водяных знаков
-                .workspace_bord
+                .workspace_board
         .container_side
             .control
                 .control_title Настройки
@@ -56,22 +56,22 @@ html
                                     .spinner_axis X
                                     input.spinner_input(type="text")
                                     .spinner_control
-                                        .spinner_button.spinner_button--increase 1
-                                        .spinner_button.spinner_button--reduce 2
+                                        .spinner_button 1
+                                        .spinner_button 2
                             .position_spinner
                                 .spinner
                                     .spinner_axis Y
                                     input.spinner_input(type="text")
                                     .spinner_control
-                                        .spinner_button.spinner_button--increase 1
-                                        .spinner_button.spinner_button--reduce 2
+                                        .spinner_button 1
+                                        .spinner_button 2
                 .control_block
                     .control_block-title Прозрачность
                     include _range
                 .control_button-group
                     button.control_button-reset Сброс
                     button.control_button-download Скачать
-                
+
     footer.footer
         .footer_container
             p.footer_copy © 2015, Это мой сайт, пожалуйста, не копируйте и не воруйте его
