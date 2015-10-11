@@ -19,28 +19,22 @@
   function attachEvents() {}
 
   function normalizeSize(image) {
-    var difference = 0;
+    var rootRatio = 0,
+        imageRatio = 0;
 
     if (image.width > root.width || image.height > root.height) {
 
-      if (image.width > image.height) {
+      rootRatio = root.width / root.height;
+      imageRatio = image.width / image.height;
 
-        difference = image.width - root.width;
-        image.height = Math.abs(image.height - difference);
+      if (rootRatio < imageRatio) {
         image.width = root.width;
-
-        image.$element.css('width', root.width);
+        image.height = Math.round(root.width / imageRatio);
       } else {
-
-        difference = image.height - root.height;
-        image.width = Math.abs(image.width - difference);
         image.height = root.height;
-
-        image.$element.css('height', root.height);
+        image.width = Math.round(root.height * imageRatio);
       }
     }
-
-    console.log(image);
   }
 
   function centerImage(image) {
@@ -69,6 +63,11 @@
 
         normalizeSize(image);
         centerImage(image);
+
+        image.$element.css({
+          'width': image.width,
+          'height': image.height
+        });
 
         root.$element.append(image.$element);
       },
@@ -109,8 +108,8 @@ var image4 = {
 };
 
 
-easel.setImage(image2);
+easel.setImage(image4);
 
 setTimeout(function() {
-  easel.setImage(image3);
+  // easel.setImage(image3);
 }, 2000);
