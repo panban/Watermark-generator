@@ -24,7 +24,7 @@
     var direction = target.getAttribute('data-direction');
 
     this.changeValue(direction);
-    this.timerId = repeat(100, this.setValue.bind(this));
+    this.timerId = repeat(100, this.setValue.bind(this), this);
   }
 
   function onMouseup(e) {
@@ -42,7 +42,7 @@
     var timerId;
     handler = handler.bind(context || null);
 
-    // clearTimeout(this.timerId);
+    clearTimeout(context.timerId); // sometimes it's undefined, why ???????????
     timerId = delay(function() {
       repeat(40, handler)
     }, ms);
