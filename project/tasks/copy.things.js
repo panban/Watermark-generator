@@ -9,7 +9,7 @@
         .pipe($.gulp.dest($.config.root + '/assets/fonts'))
 
       if ($.debug) {
-        $.gulp.src('./source/assets/demo/**.*')
+        $.gulp.src('./source/assets/demo/**/*.{png,jpg,jpeg}')
           .pipe($.gulp.dest($.config.root + '/demo'))
       }
     });
