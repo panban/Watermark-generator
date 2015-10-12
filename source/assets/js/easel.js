@@ -60,27 +60,30 @@
     normalizeSize(image, watermark);
   }
 
-  // TODO: refactor.
-  function movePosition() {
-    var rightEdge = image.width - watermark.width;
-    var bottomEdge = image.height - watermark.height;
+  function movePosition(position, isHorizont) {
 
-    if (positionSingle[0] < 0) {
-      positionSingle[0] = 0;
-    } else if (positionSingle[0] > rightEdge) {
-      positionSingle[0] = rightEdge;
+    if (isHorizont) {
+      positionSingle[0] = limitPosition(position, true);
+      watermark.$element.css('left', positionSingle[0]);
+    } else {
+      positionSingle[1] = limitPosition(position);
+      watermark.$element.css('top', positionSingle[1]);
+    }
+  }
+
+  function limitPosition(position, isHorizont) {
+    // TODO: refactor.
+    var stopEdge = (isHorizont)
+      ? image.width - watermark.width
+      : image.height - watermark.height;
+
+    if (position < 0) {
+      position = 0;
+    } else if (position > stopEdge) {
+      position = stopEdge;
     }
 
-    if (positionSingle[1] < 0) {
-      positionSingle[1] = 0;
-    } else if (positionSingle[1] > bottomEdge) {
-      positionSingle[1] = bottomEdge;
-    }
-
-    watermark.$element.css({
-      'left': positionSingle[0],
-      'top': positionSingle[1]
-    });
+    return position;
   }
 
   function centerImage(image) {
@@ -139,8 +142,8 @@
 
         // ====================================
         // For testing.
-        my.setPositoin(1024, 'horizont');
-        my.setPositoin(9123, 'vertical');
+        my.setPositoin(929, 'horizont');
+        my.setPositoin(9922, 'vertical');
         // ====================================
       },
 
@@ -149,15 +152,13 @@
         watermark.$element.css('opacity', value);
       },
 
-      setPositoin: function(value, duration) {
+      setPositoin: function(position, duration) {
 
         if (duration === 'horizont') {
-          positionSingle[0] = value;
+          movePosition(position, true)
         } else {
-          positionSingle[1] = value;
+          movePosition(position);
         }
-
-        movePosition();
       }
     });
   }
