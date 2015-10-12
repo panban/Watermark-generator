@@ -1,7 +1,6 @@
-;(function(window, $) {
-    'use strict';
+(function(window, $) {
+  'use strict';
 
-    $('.uploader_input').fileupload();
-
+  // $('.uploader_input').fileupload();
 
 })(window, jQuery);

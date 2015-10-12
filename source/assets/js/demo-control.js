@@ -22,6 +22,11 @@
       path: '/demo/cat-s.jpg',
       width: 256,
       height: 256
+    },
+    '1500x1500': {
+      path: '/demo/1500x1500.jpg',
+      width: 1500,
+      height: 1500
     }
   };
   var buttonImageEl = null,
@@ -66,8 +71,12 @@
 
   function publicInterface() {
     my = $.extend(my, {
-
+      apply: function() {
+        easel.setImage(demoData['1500x1500']);
+        easel.setWatermark(demoData['256x256']);
+      }
     });
   }
 
+  window.demo = my;
 })();

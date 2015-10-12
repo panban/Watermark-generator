@@ -18,43 +18,40 @@
 
   function attachEvents() {}
 
-  function normalizeSize(context, picture) {
+  function normalizeSize(outer, inner) {
+    var outerRatio = 0;
+    var innerRatio = 0;
 
-    if (picture.width > context.width || picture.height > context.height) {
+    if (inner.width > outer.width || inner.height > outer.height) {
 
-      picture.originalWidth = picture.originalWidth || picture.width;
-      picture.originalHeight = picture.originalHeight || picture.height;
+      outerRatio = outer.width / outer.height;
+      innerRatio = inner.width / inner.height;
 
-      context.ratio = context.width / context.height;
-      picture.ratio = picture.width / picture.height;
-
-      if (context.ratio < picture.ratio) {
-        picture.width = context.width;
-        picture.height = Math.round(context.width / picture.ratio);
+      if (outerRatio < innerRatio) {
+        inner.width = outer.width;
+        inner.height = Math.round(outer.width / innerRatio);
       } else {
-        picture.width = Math.round(context.height * picture.ratio);
-        picture.height = context.height;
+        inner.width = Math.round(outer.height * innerRatio);
+        inner.height = outer.height;
       }
     }
 
-    picture.$element.css({
-      'width': picture.width,
-      'height': picture.height
+    inner.scale = inner.originalWidth / inner.width;
+
+    inner.$element.css({
+      'width': inner.width,
+      'height': inner.height
     });
   }
 
   function scaleWatermark(watermark) {
-    watermark.originalWidth = watermark.width;
-    watermark.originalHeight = watermark.height;
 
-    if (image.originalWidth > watermark.width || image.originalHeight > watermark.height) {
-      watermark.width = watermark.width / image.ratio;
-      watermark.height = watermark.height / image.ratio;
+    if (image.scale !== 1) {
+      watermark.width = watermark.width / image.scale;
+      watermark.height = watermark.height / image.scale;
     }
 
     normalizeSize(image, watermark);
-
-    watermark.scale = watermark.originalWidth / watermark.width || 1;
   }
 
   function centerImage(image) {
@@ -70,21 +67,27 @@
     }
   }
 
+  function savePicture(picture, data) {
+    if (picture.$element) {
+      picture.$element.remove();
+    }
+
+    picture = $.extend({}, data);
+    picture.originalWidth = picture.width;
+    picture.originalHeight = picture.height;
+
+    return picture;
+  }
+
   function publicInterface() {
     my = $.extend(my, {
 
-      setImage: function(imageData) {
-        if (image.$element) {
-          image.$element.remove();
-        }
-
-        image = $.extend({}, imageData);
+      setImage: function(pictureData) {
+        image = savePicture(image, pictureData);
         image.$element = $('<div class="wm-area"><img class="wm-image" src="' + image.path + '"></div>');
 
         normalizeSize(root, image);
         centerImage(image);
-
-        root.$element.append(image.$element);
 
         if (watermark.$element) {
           my.setWatermark({
@@ -93,14 +96,12 @@
             height: watermark.originalHeight
           });
         }
+
+        root.$element.append(image.$element);
       },
 
-      setWatermark: function(imageData) {
-        if (watermark.$element) {
-          watermark.$element.remove();
-        }
-
-        watermark = $.extend({}, imageData);
+      setWatermark: function(pictureData) {
+        watermark = savePicture(watermark, pictureData);
         watermark.$element = $('<img class="wm" src="' + watermark.path + '">');
 
         scaleWatermark(watermark);
