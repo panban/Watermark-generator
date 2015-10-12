@@ -18,23 +18,42 @@
 
   function attachEvents() {}
 
-  function normalizeSize(image) {
-    var rootRatio = 0,
-        imageRatio = 0;
+  function normalizeSize(context, image) {
+    image.ratio = 0;
+    context.ratio = 0;
 
-    if (image.width > root.width || image.height > root.height) {
+    if (image.width > context.width || image.height > context.height) {
 
-      rootRatio = root.width / root.height;
-      imageRatio = image.width / image.height;
+      context.ratio = context.width / context.height;
+      image.ratio = image.width / image.height;
+      image.originalWidth = image.width;
+      image.originalHeight = image.height;
 
-      if (rootRatio < imageRatio) {
-        image.width = root.width;
-        image.height = Math.round(root.width / imageRatio);
+      if (context.ratio < image.ratio) {
+        image.width = context.width;
+        image.height = Math.round(context.width / image.ratio);
       } else {
-        image.height = root.height;
-        image.width = Math.round(root.height * imageRatio);
+        image.width = Math.round(context.height * image.ratio);
+        image.height = context.height;
       }
     }
+
+    image.$element.css({
+      'width': image.width,
+      'height': image.height
+    });
+  }
+
+  function scaleWatermark(watermark) {
+
+    if (image.originalWidth > watermark.width || image.originalHeight > watermark.height) {
+      watermark.width = watermark.width / image.ratio;
+      watermark.height = watermark.height / image.ratio;
+    }
+
+    normalizeSize(image, watermark);
+
+    watermark.scale = watermark.width / watermark.originalWidth || 1;
   }
 
   function centerImage(image) {
@@ -59,21 +78,25 @@
         }
 
         image = $.extend({}, imageData);
-        image.$element = $('<img src="' + image.path + '" class="main-image">');
+        image.$element = $('<div class="wm-area"><img class="wm-image" src="' + image.path + '"></div>');
 
-        normalizeSize(image);
+        normalizeSize(root, image);
         centerImage(image);
-
-        image.$element.css({
-          'width': image.width,
-          'height': image.height
-        });
 
         root.$element.append(image.$element);
       },
 
-      setWatermark: function(image) {
+      setWatermark: function(imageData) {
+        if (watermark.$element) {
+          watermark.$element.remove();
+        }
 
+        watermark = $.extend({}, imageData);
+        watermark.$element = $('<img class="wm" src="' + watermark.path + '">');
+
+        scaleWatermark(watermark);
+
+        image.$element.append(watermark.$element);
       }
     });
   }
@@ -106,10 +129,15 @@ var image4 = {
   width: 500,
   height: 331
 };
+var image5 = {
+  path: '/demo/cat-s.jpg',
+  width: 256,
+  height: 256
+};
 
-
-easel.setImage(image4);
+easel.setImage(image2);
+easel.setWatermark(image3);
 
 setTimeout(function() {
-  // easel.setImage(image3);
+  // easel.setWatermark(image1);
 }, 2000);

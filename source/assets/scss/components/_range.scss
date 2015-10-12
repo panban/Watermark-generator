@@ -28,6 +28,7 @@
     border-radius: ($size / 2) * 1px;
     background: #dbe1e8;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    user-select: none;
     cursor: pointer;
 
     &:before {

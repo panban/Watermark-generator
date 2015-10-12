@@ -53,8 +53,18 @@
 }
 
 
-.main-image {
-  position: relative;
+.wm-area,
+.wm {
+  overflow: hidden;
+  position: absolute;
   top: 0;
   left: 0;
+}
+
+.wm-image {
+  width: inherit;
+}
+
+.wm {
+  z-index: 100;
 }
