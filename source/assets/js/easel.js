@@ -18,33 +18,34 @@
 
   function attachEvents() {}
 
-  function normalizeSize(context, image) {
-    image.ratio = 0;
-    context.ratio = 0;
+  function normalizeSize(context, picture) {
 
-    if (image.width > context.width || image.height > context.height) {
+    if (picture.width > context.width || picture.height > context.height) {
+
+      picture.originalWidth = picture.originalWidth || picture.width;
+      picture.originalHeight = picture.originalHeight || picture.height;
 
       context.ratio = context.width / context.height;
-      image.ratio = image.width / image.height;
-      image.originalWidth = image.width;
-      image.originalHeight = image.height;
+      picture.ratio = picture.width / picture.height;
 
-      if (context.ratio < image.ratio) {
-        image.width = context.width;
-        image.height = Math.round(context.width / image.ratio);
+      if (context.ratio < picture.ratio) {
+        picture.width = context.width;
+        picture.height = Math.round(context.width / picture.ratio);
       } else {
-        image.width = Math.round(context.height * image.ratio);
-        image.height = context.height;
+        picture.width = Math.round(context.height * picture.ratio);
+        picture.height = context.height;
       }
     }
 
-    image.$element.css({
-      'width': image.width,
-      'height': image.height
+    picture.$element.css({
+      'width': picture.width,
+      'height': picture.height
     });
   }
 
   function scaleWatermark(watermark) {
+    watermark.originalWidth = watermark.width;
+    watermark.originalHeight = watermark.height;
 
     if (image.originalWidth > watermark.width || image.originalHeight > watermark.height) {
       watermark.width = watermark.width / image.ratio;
@@ -53,7 +54,7 @@
 
     normalizeSize(image, watermark);
 
-    watermark.scale = watermark.width / watermark.originalWidth || 1;
+    watermark.scale = watermark.originalWidth / watermark.width || 1;
   }
 
   function centerImage(image) {
@@ -116,8 +117,3 @@
 
   window.easel = my;
 })(window, jQuery);
-
-
-/*============================================================
-  // TEST
-=============================================================*/

@@ -13,11 +13,6 @@
       width: 2000,
       height: 1000
     },
-    '638x640': {
-      path: '/demo/cat-h.jpeg',
-      width: 638,
-      height: 640
-    },
     '500x331': {
       path: '/demo/cat.png',
       width: 500,
