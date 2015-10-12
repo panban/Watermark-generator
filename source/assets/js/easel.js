@@ -84,6 +84,14 @@
         centerImage(image);
 
         root.$element.append(image.$element);
+
+        if (watermark.$element) {
+          my.setWatermark({
+            path: watermark.path,
+            width: watermark.originalWidth,
+            height: watermark.originalHeight
+          });
+        }
       },
 
       setWatermark: function(imageData) {
@@ -97,6 +105,11 @@
         scaleWatermark(watermark);
 
         image.$element.append(watermark.$element);
+      },
+
+      setOpacity: function(value) {
+        watermark.opacity = value;
+        watermark.$element.css('opacity', value);
       }
     });
   }
@@ -108,36 +121,3 @@
 /*============================================================
   // TEST
 =============================================================*/
-
-var image1 = {
-  path: '/demo/cat-wh.jpg',
-  width: 600,
-  height: 600
-};
-var image2 = {
-  path: '/demo/cat-w.jpg',
-  width: 2000,
-  height: 1000
-};
-var image3 = {
-  path: '/demo/cat-h.jpeg',
-  width: 638,
-  height: 640
-};
-var image4 = {
-  path: '/demo/cat.png',
-  width: 500,
-  height: 331
-};
-var image5 = {
-  path: '/demo/cat-s.jpg',
-  width: 256,
-  height: 256
-};
-
-easel.setImage(image2);
-easel.setWatermark(image3);
-
-setTimeout(function() {
-  // easel.setWatermark(image1);
-}, 2000);

@@ -1,19 +1,21 @@
 (function(window, document, $) {
   'use strict';
 
-  var my = {},
-      options = {
-        eps: 1000
-      },
-      $rootEl = null,
-      $handleEl = null,
-      $progressEl = null,
-      $document = null,
-      rangeBox = null,
-      leftEdge = 0,
-      rangeWidth = 0,
-      radius = 0,
-      activeClass = 'range_handle--active';
+  var my = {
+    change: function() {}
+    },
+    options = {
+      eps: 1000
+    },
+    $rootEl = null,
+    $handleEl = null,
+    $progressEl = null,
+    $document = null,
+    rangeBox = null,
+    leftEdge = 0,
+    rangeWidth = 0,
+    radius = 0,
+    activeClass = 'range_handle--active';
 
   publicInterface();
   init();
@@ -69,7 +71,7 @@
   function countValue(position) {
     var result = (Math.round((position / rangeWidth) * options.eps)) / options.eps;
 
-    my.change(result);
+    my.change(1 - result);
   }
 
   function moveHangle(position) {
@@ -87,7 +89,3 @@
 
   window.range = my;
 })(window, document, jQuery);
-
-range.change = function(value) {
-  // console.log(value);
-};

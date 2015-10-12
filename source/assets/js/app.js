@@ -1,5 +1,6 @@
-(function(window, $) {
-  'use strict';
+$(function() {
 
-
-})(window, jQuery);
+  range.change = function(value) {
+    easel.setOpacity(value);
+  };
+});
