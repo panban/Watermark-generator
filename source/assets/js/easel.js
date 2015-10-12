@@ -4,7 +4,12 @@
   var my = {},
       root = {},
       image = {},
-      watermark = {};
+      watermark = {},
+      positionSingle = [0, 0],
+      positionTiling = [[0, 0], [0, 0]],
+      SINGLE_MODE = 'SINGLE_MODE',
+      TILING_MODE = 'TILING_MODE',
+      mode = '';
 
   publicInterface();
   init();
@@ -14,6 +19,7 @@
     root.$element = $('.workspace_board');
     root.width = root.$element.width();
     root.height = root.$element.height();
+    mode = SINGLE_MODE;
   }
 
   function attachEvents() {}
@@ -47,11 +53,34 @@
   function scaleWatermark(watermark) {
 
     if (image.scale !== 1) {
-      watermark.width = watermark.width / image.scale;
-      watermark.height = watermark.height / image.scale;
+      watermark.width = Math.round(watermark.width / image.scale);
+      watermark.height = Math.round(watermark.height / image.scale);
     }
 
     normalizeSize(image, watermark);
+  }
+
+  // TODO: refactor.
+  function movePosition() {
+    var rightEdge = image.width - watermark.width;
+    var bottomEdge = image.height - watermark.height;
+
+    if (positionSingle[0] < 0) {
+      positionSingle[0] = 0;
+    } else if (positionSingle[0] > rightEdge) {
+      positionSingle[0] = rightEdge;
+    }
+
+    if (positionSingle[1] < 0) {
+      positionSingle[1] = 0;
+    } else if (positionSingle[1] > bottomEdge) {
+      positionSingle[1] = bottomEdge;
+    }
+
+    watermark.$element.css({
+      'left': positionSingle[0],
+      'top': positionSingle[1]
+    });
   }
 
   function centerImage(image) {
@@ -107,11 +136,28 @@
         scaleWatermark(watermark);
 
         image.$element.append(watermark.$element);
+
+        // ====================================
+        // For testing.
+        my.setPositoin(1024, 'horizont');
+        my.setPositoin(9123, 'vertical');
+        // ====================================
       },
 
       setOpacity: function(value) {
         watermark.opacity = value;
         watermark.$element.css('opacity', value);
+      },
+
+      setPositoin: function(value, duration) {
+
+        if (duration === 'horizont') {
+          positionSingle[0] = value;
+        } else {
+          positionSingle[1] = value;
+        }
+
+        movePosition();
       }
     });
   }
