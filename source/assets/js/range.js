@@ -25,8 +25,8 @@
     $progressEl = $rootEl.find('.range_progress');
     rangeBox =  $rootEl[0].getBoundingClientRect();
     $document = $(document);
-    leftEdge = rangeBox.left,
-    rangeWidth = rangeBox.width,
+    leftEdge = rangeBox.left;
+    rangeWidth = rangeBox.width;
     radius = $handleEl[0].offsetWidth / 2;
   }
 
