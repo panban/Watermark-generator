@@ -42,7 +42,37 @@
     font-size: 14px;
   }
 
-  &_button-group {
-    padding: 50px 20px 0;
+  &_button {
+    &-group {
+      padding: 50px 20px 0;
+      @extend %clearfix;
+    }
+
+    &-reset, &-download {
+      padding: 10px 5px;
+      min-width: 100px;
+      border: 0;
+      border-radius:3px;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    &-reset {
+      float: left;
+      background: #c1cfd9;
+      
+      &:hover {
+        background: linear-gradient(to bottom, #afbcc5, #c1ced8);
+      }
+    }
+
+    &-download {
+      float: right;
+      background: #f97e76;
+
+      &:hover {
+        background: linear-gradient(to bottom, #ed7970, #f87d75);
+      }
+    }
   }
 }
