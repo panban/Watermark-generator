@@ -1,9 +1,7 @@
 (function(window, document, $) {
   'use strict';
 
-  var my = {
-    change: function() {}
-    },
+  var my = {},
     options = {
       eps: 1000
     },
@@ -81,9 +79,12 @@
 
   function publicInterface() {
     my = $.extend(my, {
+
       setEps: function(eps) {
         options.eps = eps;
-      }
+      },
+
+      change: function() {}
     });
   }
 

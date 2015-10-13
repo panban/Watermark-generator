@@ -1,8 +1,8 @@
 $(function() {
 
-  range.change = function(value) {
-    easel.setOpacity(value);
-  };
+  range.change = easel.setOpacity;
+
+  sector.triger = easel.moveBySector;
 
   demo.apply();
 });
