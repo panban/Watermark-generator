@@ -4,6 +4,8 @@
   var my = {},
       root = {},
       image = {},
+      sector = {},
+      sectorCache = {},
       watermark = {},
       positionSingle = [0, 0],
       positionTiling = [[0, 0], [0, 0]],
@@ -13,7 +15,6 @@
 
   publicInterface();
   init();
-  attachEvents();
 
   function init() {
     root.$element = $('.workspace_board');
@@ -21,8 +22,6 @@
     root.height = root.$element.height();
     mode = SINGLE_MODE;
   }
-
-  function attachEvents() {}
 
   function normalizeSize(outer, inner) {
     var outerRatio = 0;
@@ -50,7 +49,7 @@
     });
   }
 
-  function scaleWatermark(watermark) {
+  function scaleWatermark() {
 
     if (image.scale !== 1) {
       watermark.width = Math.round(watermark.width / image.scale);
@@ -73,20 +72,20 @@
 
   function limitPosition(position, isHorizont) {
     // TODO: refactor.
-    var stopEdge = (isHorizont)
+    var limit = (isHorizont)
       ? image.width - watermark.width
       : image.height - watermark.height;
 
     if (position < 0) {
       position = 0;
-    } else if (position > stopEdge) {
-      position = stopEdge;
+    } else if (position > limit) {
+      position = limit;
     }
 
     return position;
   }
 
-  function centerImage(image) {
+  function centerImage() {
     var centeringWidth = (root.width - image.width) / 2;
     var centeringHeight = (root.height - image.height) / 2;
 
@@ -111,6 +110,15 @@
     return picture;
   }
 
+  function countSectorSize(stepX, stepY) {
+    sectorCache = {};
+
+    sector.width = Math.round(image.width / 3);
+    sector.height = Math.round(image.height / 3);
+    sector.centerWidth =  Math.round((sector.width - watermark.width) / 2);
+    sector.centerHeight = Math.round((sector.height - watermark.height) / 2);
+  }
+
   function publicInterface() {
     my = $.extend(my, {
 
@@ -119,7 +127,7 @@
         image.$element = $('<div class="wm-area"><img class="wm-image" src="' + image.path + '"></div>');
 
         normalizeSize(root, image);
-        centerImage(image);
+        centerImage();
 
         if (watermark.$element) {
           my.setWatermark({
@@ -136,14 +144,16 @@
         watermark = savePicture(watermark, pictureData);
         watermark.$element = $('<img class="wm" src="' + watermark.path + '">');
 
-        scaleWatermark(watermark);
+        scaleWatermark();
+        countSectorSize();
 
         image.$element.append(watermark.$element);
 
         // ====================================
         // For testing.
-        my.setPositoin(929, 'horizont');
-        my.setPositoin(9922, 'vertical');
+        my.moveBySector(1, 1);
+        // my.move(99, 'vertical');
+        // my.move(9987, 'horizont');
         // ====================================
       },
 
@@ -152,13 +162,26 @@
         watermark.$element.css('opacity', value);
       },
 
-      setPositoin: function(position, duration) {
+      move: function(position, duration) {
 
         if (duration === 'horizont') {
           movePosition(position, true)
         } else {
           movePosition(position);
         }
+      },
+
+      moveBySector: function(stepX, stepY) {
+        var sectorName = stepX + '.' + stepY;
+
+        if (!sectorCache[sectorName]) {
+          sectorCache[sectorName] = [];
+          sectorCache[sectorName][0] = sector.centerWidth + sector.width * stepX;
+          sectorCache[sectorName][1] = sector.centerHeight + sector.height * stepY;
+        }
+
+        movePosition(sectorCache[sectorName][0], true);
+        movePosition(sectorCache[sectorName][1]);
       }
     });
   }
