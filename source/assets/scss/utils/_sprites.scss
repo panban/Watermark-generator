@@ -1,0 +1,48 @@
+.facebook-active, .facebook, .like, .twitter-active, .twitter, .vk-active, .vk {
+  background-image: url('../img/sprites.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.facebook-active {
+  background-position: 5px -40px;
+  width: 43px;
+  height: 32px;
+}
+
+.facebook {
+  background-position: 5px 5px;
+  width: 36px;
+  height: 32px;
+}
+
+.like {
+  background-position: 5px -98px;
+  width: 36px;
+  height: 36px;
+}
+
+.twitter-active {
+  background-position: -45px -41px;
+  width: 43px;
+  height: 27px;
+}
+
+.twitter {
+  background-position: -45px 6px;
+  width: 36px;
+  height: 27px;
+}
+
+.vk-active {
+  background-position: -93px -47px;
+  width: 43px;
+  height: 27px;
+}
+
+.vk {
+  background-position: -93px 3px;
+  width: 36px;
+  height: 27px;
+}
+

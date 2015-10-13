@@ -1,0 +1,96 @@
+
+.tabs {
+  position: absolute;
+  top: 100px;
+  left: 0;
+}
+
+.language, .socials {
+
+  &_link {
+    display: block;
+    width: 43px;
+    overflow: hidden;
+    padding: 10px 5px;
+    background-color: rgba(214, 213, 215, 0.8);
+    color: #989ba0;
+    text-decoration: none;
+  }
+}
+
+.language {
+  margin-bottom: 18px;
+
+  &_link {
+    &:first-child {
+      border-bottom: 1px solid #a5a7ab;
+    }
+    
+    &:hover {
+      color: #4f555d;
+    }
+  }
+}
+
+.socials {
+  @extend %clearfix;
+  position: relative;
+  left: -44px;
+  transition: 0.3s;
+
+  &-wrapper {
+    &:hover {
+      .socials {
+        left: 0;
+      }
+    }
+  }
+
+  &_list {
+    float: left;
+  }
+  
+  &_link, &_like {
+    text-indent: -9999px;
+  }
+
+  &_link {
+    padding: 21px 5px;
+
+    &-facebook {
+      @extend .facebook;
+
+      &:hover {
+        @extend .facebook-active;
+      }
+    }
+
+    &-twitter {
+      @extend .twitter;
+
+      &:hover {
+        @extend .twitter-active;
+      }
+    }
+
+    &-vk {
+      @extend .vk;
+
+      &:hover {
+        @extend .vk-active;
+      }
+    }
+  }
+
+  &_like {
+    float: right;
+    padding-bottom: 30px;
+    @extend .language_link;
+    @extend .like;
+
+    &:first-child {
+      border: none;
+    }
+  }
+}
+
