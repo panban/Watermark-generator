@@ -8,8 +8,33 @@
   }
 
   &_block {
+    position: relative;
     padding: 15px 21px 31px;
     border-bottom: 1px solid #f4c3c2;
+    
+    &:after {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border: 10px solid transparent;
+      border-top-color: #f4c3c2;
+      content: '';
+    }
+    &:before {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border: 9px solid transparent;
+      border-top-color: #f1f1f5;
+      content: '';
+      z-index: 1;
+    }
   }
 
   &_block-title {
