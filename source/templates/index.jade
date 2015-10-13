@@ -32,6 +32,8 @@ html
                         .uploader_field Изображение отсутствует
                         a.uploader_button
                         input.uploader_input(type="file")
+                    #progress
+                        .bar(style="width: 0%")
 
                     .uploader-label Водяной знак
                     label.uploader
@@ -77,6 +79,8 @@ html
     footer.footer
         .footer_container
             p.footer_copy © 2015, Это мой сайт, пожалуйста, не копируйте и не воруйте его
+
+
 
     script(src='/assets/js/foundation.min.js%=version=%')
     script(src='/assets/js/app%=suffix=%.js%=version=%')
