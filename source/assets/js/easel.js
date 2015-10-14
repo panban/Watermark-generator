@@ -7,6 +7,7 @@
       sector = {},
       sectorCache = {},
       watermark = {},
+      limit = [0, 0],
       positionSingle = [0, 0],
       positionTiling = [[0, 0], [0, 0]],
       SINGLE_MODE = 'SINGLE_MODE',
@@ -59,27 +60,13 @@
     normalizeSize(image, watermark);
   }
 
-  function movePosition(position, isHorizont) {
-
-    if (isHorizont) {
-      positionSingle[0] = limitPosition(position, true);
-      watermark.$element.css('left', positionSingle[0]);
-    } else {
-      positionSingle[1] = limitPosition(position);
-      watermark.$element.css('top', positionSingle[1]);
-    }
-  }
-
   function limitPosition(position, isHorizont) {
-    // TODO: refactor.
-    var limit = (isHorizont)
-      ? image.width - watermark.width
-      : image.height - watermark.height;
+    var currentLimit = (isHorizont) ? limit[0] : limit[1];
 
     if (position < 0) {
       position = 0;
-    } else if (position > limit) {
-      position = limit;
+    } else if (position > currentLimit) {
+      position = currentLimit;
     }
 
     return position;
@@ -119,6 +106,11 @@
     sector.centerHeight = Math.round((sector.height - watermark.height) / 2);
   }
 
+  function countLimit() {
+    limit[0] = image.width - watermark.width;
+    limit[1] = image.height - watermark.height;
+  }
+
   function publicInterface() {
     my = $.extend(my, {
 
@@ -146,15 +138,14 @@
 
         scaleWatermark();
         countSectorSize();
+        countLimit();
 
         image.$element.append(watermark.$element);
 
-        // ====================================
-        // For testing.
-        my.moveBySector(1, 1);
-        // my.move(99, 'vertical');
-        // my.move(9987, 'horizont');
-        // ====================================
+        my.moveBySector(0, 0);
+
+        my.getLimit(limit);
+        my.getPosition(positionSingle);
       },
 
       setOpacity: function(value) {
@@ -162,13 +153,17 @@
         watermark.$element.css('opacity', value);
       },
 
-      move: function(position, duration) {
+      move: function(position, isHorizont) {
 
-        if (duration === 'horizont') {
-          movePosition(position, true)
+        if (isHorizont) {
+          positionSingle[0] = limitPosition(position, true);
+          watermark.$element.css('left', positionSingle[0]);
         } else {
-          movePosition(position);
+          positionSingle[1] = limitPosition(position);
+          watermark.$element.css('top', positionSingle[1]);
         }
+
+        my.getPosition(positionSingle);
       },
 
       moveBySector: function(stepX, stepY) {
@@ -180,9 +175,13 @@
           sectorCache[sectorName][1] = sector.centerHeight + sector.height * stepY;
         }
 
-        movePosition(sectorCache[sectorName][0], true);
-        movePosition(sectorCache[sectorName][1]);
-      }
+        my.move(sectorCache[sectorName][0], true);
+        my.move(sectorCache[sectorName][1]);
+      },
+
+      getLimit: function(limit) {},
+
+      getPosition: function(position) {},
     });
   }
 
