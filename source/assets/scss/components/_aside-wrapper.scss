@@ -1,11 +1,12 @@
 
-.tabs {
+.aside-wrapper {
   position: absolute;
   top: 100px;
   left: 0;
 }
 
-.language, .socials {
+.language,
+.socials {
 
   &_link {
     display: block;
@@ -43,6 +44,10 @@
       .socials {
         left: 0;
       }
+
+      .general {
+        @extend .general-hover;
+      }
     }
   }
 
@@ -50,7 +55,8 @@
     float: left;
   }
   
-  &_link, &_like {
+  &_link,
+  &_general {
     text-indent: -9999px;
   }
 
@@ -61,7 +67,7 @@
       @extend .facebook;
 
       &:hover {
-        @extend .facebook-active;
+        @extend .facebook-hover;
       }
     }
 
@@ -69,7 +75,7 @@
       @extend .twitter;
 
       &:hover {
-        @extend .twitter-active;
+        @extend .twitter-hover;
       }
     }
 
@@ -77,16 +83,16 @@
       @extend .vk;
 
       &:hover {
-        @extend .vk-active;
+        @extend .vk-hover;
       }
     }
   }
 
-  &_like {
+  &_general {
+    @extend .language_link;
+    @extend .general;
     float: right;
     padding-bottom: 30px;
-    @extend .language_link;
-    @extend .like;
 
     &:first-child {
       border: none;

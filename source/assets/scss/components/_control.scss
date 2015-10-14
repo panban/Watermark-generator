@@ -13,6 +13,7 @@
     border-bottom: 1px solid #f4c3c2;
     
     &:after {
+      content: '';
       position: absolute;
       top: 100%;
       left: 50%;
@@ -21,9 +22,10 @@
       height: 0;
       border: 10px solid transparent;
       border-top-color: #f4c3c2;
-      content: '';
     }
+
     &:before {
+      content: '';
       position: absolute;
       top: 100%;
       left: 50%;
@@ -32,7 +34,6 @@
       height: 0;
       border: 9px solid transparent;
       border-top-color: #f1f1f5;
-      content: '';
       z-index: 1;
     }
   }
@@ -43,9 +44,10 @@
   }
 
   &_button {
+
     &-group {
-      padding: 50px 20px 0;
-      @extend %clearfix;
+        @extend %clearfix;
+        padding: 50px 20px 0;
     }
 
     &-reset, &-download {
@@ -60,7 +62,7 @@
     &-reset {
       float: left;
       background: #c1cfd9;
-      
+
       &:hover {
         background: linear-gradient(to bottom, #afbcc5, #c1ced8);
       }
@@ -76,3 +78,8 @@
     }
   }
 }
+
+
+
+
+
