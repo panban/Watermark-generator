@@ -1,7 +1,6 @@
-
 .aside-wrapper {
-  position: absolute;
-  top: 100px;
+  position: fixed;
+  top: 30%;
   left: 0;
 }
 
@@ -23,6 +22,7 @@
   margin-bottom: 18px;
 
   &_link {
+
     &:first-child {
       border-bottom: 1px solid #a5a7ab;
     }
@@ -36,28 +36,15 @@
 .socials {
   @extend %clearfix;
   position: relative;
-  left: -44px;
+  transform: translateX(-100%);
   transition: 0.3s;
 
-  &-wrapper {
-    &:hover {
-      .socials {
-        left: 0;
-      }
+  &:hover {
+    transform: translateX(0);
 
-      .general {
-        @extend .general-hover;
-      }
+    .general {
+      @extend .general-hover;
     }
-  }
-
-  &_list {
-    float: left;
-  }
-  
-  &_link,
-  &_general {
-    text-indent: -9999px;
   }
 
   &_link {
@@ -89,6 +76,13 @@
   }
 
   &_general {
+    transform: translateX(100%);
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  &_general {
     @extend .language_link;
     @extend .general;
     float: right;
@@ -99,4 +93,3 @@
     }
   }
 }
-
