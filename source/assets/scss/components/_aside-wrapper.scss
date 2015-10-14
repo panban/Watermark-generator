@@ -5,7 +5,7 @@
 }
 
 .language,
-.socials {
+.icon {
 
   &_link {
     display: block;
@@ -46,7 +46,9 @@
       @extend .general-hover;
     }
   }
+}
 
+.icon {
   &_link {
     padding: 21px 5px;
 
