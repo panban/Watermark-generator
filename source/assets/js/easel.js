@@ -134,7 +134,7 @@
 
       setWatermark: function(pictureData) {
         watermark = savePicture(watermark, pictureData);
-        watermark.$element = $('<img class="wm" src="' + watermark.path + '">');
+        watermark.$element = $('<img id ="wm" class="wm draggable ui-widget-content" src="' + watermark.path + '">');
 
         scaleWatermark();
         countSectorSize();
@@ -181,7 +181,9 @@
 
       getLimit: function(limit) {},
 
-      getPosition: function(position) {},
+      getPosition: function(position) {
+        
+      },
     });
   }
 

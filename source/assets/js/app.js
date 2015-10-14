@@ -55,16 +55,27 @@ $(function() {
     spinnerVertical.spinner('value', position[1]);
   }
 
-
+ /*==========================================================
+    // Play demo view.
+  ===========================================================*/
+  demo.apply();
 
   /*==========================================================
     // Init drag and drop.
   ===========================================================*/
+  
+   $('#wm').draggable({
+      containment: '.wm-image',
+      scroll: false,
+      drag: function () {
+        spinnerHorizont.spinner("value", parseInt($('#wm').css('left')));
+        spinnerVertical.spinner("value", parseInt($('#wm').css('top')));
+
+      }
+  });
 
 
 
-  /*==========================================================
-    // Play demo view.
-  ===========================================================*/
-  demo.apply();
+ 
+  
 });
