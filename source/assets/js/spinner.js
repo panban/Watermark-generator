@@ -80,3 +80,38 @@ var spinner1 = new Spinner($('.spinner'), {
   min: 0,
   max: 10
 });*/
+
+$(document).ready(function(){
+  var spinnerX = $( "#spinnerX" ).spinner({
+              min:0,
+              max:10,
+              
+              create: function( event, ui ) {
+                
+                $(this).on('keyup', function() {
+                  console.log(this);
+                    spinnerX.spinner( "value", spinnerX.spinner( "value" ));
+                });
+              },
+              spin: function( event, ui ) {
+                console.log("in "+ui.value);
+                return ui.value;
+              }
+              });
+
+    var spinnerY = $( "#spinnerY" ).spinner({
+              min:0,
+              max:10,
+              create: function( event, ui ) {
+                
+                $(this).on('keyup', function() {
+                    spinnerY.spinner( "value", spinnerY.spinner( "value" ));
+                });
+              },
+
+              spin: function( event, ui ) {
+                console.log("in "+ui.value);
+                return ui.value;
+              }
+              });
+})

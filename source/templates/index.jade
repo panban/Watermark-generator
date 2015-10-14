@@ -58,17 +58,13 @@ html
                             .position_spinner
                                 .spinner
                                     .spinner_axis X
-                                    input.spinner_input(type="text")
-                                    .spinner_control
-                                        .spinner_button 1
-                                        .spinner_button 2
+                                    input.spinner_input(type="text" id="spinnerX")
+                                    
                             .position_spinner
                                 .spinner
                                     .spinner_axis Y
-                                    input.spinner_input(type="text")
-                                    .spinner_control
-                                        .spinner_button 1
-                                        .spinner_button 2
+                                    input.spinner_input(type="text" id="spinnerY")
+                                    
                 .control_block
                     .control_block-title Прозрачность
                     include _range

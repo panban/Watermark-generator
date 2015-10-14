@@ -1,5 +1,7 @@
 .spinner {
-  padding-right: 8px;
+  position: relative;
+  padding-right: 0;
+  width: 80px;
 
   &_axis,
   &_control,
@@ -25,7 +27,34 @@
     border-radius: 2px;
   }
 
-  &_control {
+}
 
-  }
+.ui-spinner-button {
+  position: absolute;
+  text-indent: 99999px;
+  display: block;
+  overflow: hidden;
+  width: 13px;
+  height: 8px;
+  right: 0;
+  cursor: pointer;
+  background: url(/assets/img/spinner-arrows.png) no-repeat 0 0; 
+}
+
+.ui-spinner-up {
+  top: 5px;
+  background-position: -13px -9px; 
+}
+
+.ui-spinner-up:hover {
+  background-position: 0 0; 
+}
+
+.ui-spinner-down {
+  bottom: 5px;
+  background-position: 0 -9px; 
+}
+
+.ui-spinner-down:hover {
+  background-position: -13px 0; 
 }
