@@ -64,12 +64,17 @@ $(function() {
     // Init drag and drop.
   ===========================================================*/
   
-   $('#wm').draggable({
+   $('.wm').draggable({
       containment: '.wm-image',
       scroll: false,
-      drag: function () {
-        spinnerHorizont.spinner("value", parseInt($('#wm').css('left')));
-        spinnerVertical.spinner("value", parseInt($('#wm').css('top')));
+      drag: function (e, param) {
+        var x = param.position.left,
+            y = param.position.top;
+
+        easel.move(x, true);
+        easel.move(y);
+        spinnerHorizont.spinner("value", x);
+        spinnerVertical.spinner("value", y);
 
       }
   });
