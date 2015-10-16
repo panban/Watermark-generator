@@ -116,7 +116,11 @@
 
       setImage: function(pictureData) {
         image = savePicture(image, pictureData);
-        image.$element = $('<div class="wm-area"><img class="wm-image" src="' + image.path + '"></div>');
+        image.$element = $([
+            '<div class="watermark-container">',
+              '<img class="watermark-image" src="' + image.path + '">',
+            '</div>'
+          ].join(''));
 
         normalizeSize(root, image);
         centerImage();
@@ -134,7 +138,7 @@
 
       setWatermark: function(pictureData) {
         watermark = savePicture(watermark, pictureData);
-        watermark.$element = $('<img id ="wm" class="wm draggable ui-widget-content" src="' + watermark.path + '">');
+        watermark.$element = $('<img class="watermark draggable ui-widget-content" src="' + watermark.path + '">');
 
         scaleWatermark();
         countSectorSize();
@@ -153,13 +157,15 @@
         watermark.$element.css('opacity', value);
       },
 
-      move: function(position, isHorizont) {
+      move: function(position) {
 
-        if (isHorizont) {
-          positionSingle[0] = limitPosition(position, true);
+        if (position[0] !== null) {
+          positionSingle[0] = limitPosition(position[0], true);
           watermark.$element.css('left', positionSingle[0]);
-        } else {
-          positionSingle[1] = limitPosition(position);
+        }
+
+        if (position[1] !== null) {
+          positionSingle[1] = limitPosition(position[1]);
           watermark.$element.css('top', positionSingle[1]);
         }
 
@@ -175,15 +181,12 @@
           sectorCache[sectorName][1] = sector.centerHeight + sector.height * stepY;
         }
 
-        my.move(sectorCache[sectorName][0], true);
-        my.move(sectorCache[sectorName][1]);
+        my.move([sectorCache[sectorName][0], sectorCache[sectorName][1]]);
       },
 
       getLimit: function(limit) {},
 
-      getPosition: function(position) {
-        
-      },
+      getPosition: function(position) {},
     });
   }
 

@@ -53,18 +53,19 @@
 }
 
 
-.wm-area,
-.wm {
+.watermark-container,
+.watermark {
   overflow: hidden;
   position: absolute;
   top: 0;
   left: 0;
 }
 
-.wm-image {
+.watermark-image {
   width: inherit;
 }
 
-.wm {
+.watermark {
   z-index: 100;
+  cursor: move
 }
