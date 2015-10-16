@@ -80,6 +80,4 @@ $(function() {
      spinnerHorizont.spinner('value', position[0]);
      spinnerVertical.spinner('value', position[1]);
    }
-
-
 });

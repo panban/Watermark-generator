@@ -7,6 +7,7 @@
       sectorsCache = {},
       activeClass = 'position-area--current';
 
+  publicInterface();
   init();
   attachEvents();
 
@@ -15,6 +16,11 @@
     linkEls = rootEl.find('a');
 
     saveSectors();
+  }
+
+  function attachEvents() {
+
+    rootEl.on('click', 'a', onClick);
   }
 
   function saveSectors() {
@@ -30,12 +36,10 @@
 
   function updateLinks(currentEl) {
     linkEls.removeClass(activeClass);
-    currentEl.addClass(activeClass);
-  }
 
-  function attachEvents() {
-
-    rootEl.on('click', 'a', onClick);
+    if (currentEl) {
+      currentEl.addClass(activeClass);
+    }
   }
 
   function onClick(e) {
@@ -48,6 +52,12 @@
 
   function publicInterface() {
     my = $.extend(my, {
+
+      toggleMode: function() {
+
+        updateLinks();
+        rootEl.off('click', 'a', onClick);
+      },
 
       triger: function() {}
     });

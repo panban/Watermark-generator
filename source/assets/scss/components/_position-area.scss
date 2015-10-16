@@ -2,8 +2,32 @@
   $partSize: 34;
 
   @extend %clearfix;
+  position: relative;
   width: ($partSize * 3) * 1px;
   padding: 1px 0 0 1px;
+
+  &_main-line,
+  &_cross-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #f97e76;
+  }
+
+  &_main-line {
+    width: 0;
+    max-width: 100%;
+    margin: auto;
+  }
+
+  &_cross-line {
+    right: 2px;
+    height: 0;
+    max-height: 100%;
+    margin: auto;
+  }
 
   a {
     float: left;

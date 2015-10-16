@@ -4,6 +4,7 @@
   var my = {},
       root = {},
       image = {},
+      tiling = {},
       sector = {},
       sectorCache = {},
       watermark = {},
@@ -111,6 +112,43 @@
     limit[1] = image.height - watermark.height;
   }
 
+  function createTiling() {
+    var i, j;
+    var $clone = null;
+
+    var gutterH = 20;
+    var gutterV = 20;
+
+    tiling.$element = $('<div class="watermark-tiling"></div>');
+    tiling.countH = Math.round(image.width / watermark.width);
+    tiling.countV = Math.round(image.height / watermark.height);
+    tiling.wms = [];
+
+    var w = 0;
+    var h = 0;
+
+    for (i = 1; i < tiling.countV; i++) {
+
+      for (j = 1; j < tiling.countH; j++) {
+
+        tiling.wms.push($clone = watermark.$element.clone());
+        $clone.css({
+          left: w,
+          top: h
+        });
+
+        tiling.$element.append($clone);
+        w += watermark.width + gutterV;
+      }
+
+      w = 0;
+      h += watermark.height + gutterH;
+    }
+
+    image.$element.append(tiling.$element);
+  }
+
+
   function publicInterface() {
     my = $.extend(my, {
 
@@ -150,6 +188,12 @@
 
         my.getLimit(limit);
         my.getPosition(positionSingle);
+
+
+        // =========================================================
+        // Test
+        createTiling();
+        // =========================================================
       },
 
       setOpacity: function(value) {
