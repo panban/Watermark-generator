@@ -1,22 +1,10 @@
 html
-  head
-    meta(charset='utf-8')
-    title Watermark Generator
-    meta(content='', name='author')
-    meta(content='', name='description')
-    meta(content='', name='keywords')
-    meta(content='width=device-width, initial-scale=1', name='viewport')
-    meta(content='ie=edge', http-equiv='x-ua-compatible')
-    // favicon block start
-    // favicon block end
-    link(rel='stylesheet', href='/assets/css/app%=suffix=%.css%=version=%')
+  include _head
   body
     <!--[if lt IE 10]>
     <p class="browserhappy">Вы используете устаревший браузер. <br> Пожалуйста <a href='http://browsehappy.com/'>обновите его.</a></p>
     <![endif]-->
 
-    include _demo-control
-    
     main.container
         .container_base
             .workspace
@@ -72,29 +60,7 @@ html
                     button.control_button-reset Сброс
                     button.control_button-download Скачать
 
-    aside.aside-wrapper
-        .language
-            ul.language_list
-                li.language_item
-                    a.language_link(href="#") рус
-                li.language_item
-                    a.language_link(href="#") eng
-        .socials
-            a.icon_general.icon-40
-            ul.icon_list
-                li.icon_item
-                    a.icon_link.icon_link-facebook.icon-40(href="#")
-                li.icon_item
-                    a.icon_link.icon_link-twitter.icon-40(href="#")
-                li.icon_item
-                    a.icon_link.icon_link-vk.icon-40(href="#")
-
-
-    footer.footer
-        .footer_container
-            p.footer_copy © 2015, Это мой сайт, пожалуйста, не копируйте и не воруйте его
-
-
-
-    script(src='/assets/js/foundation.min.js%=version=%')
-    script(src='/assets/js/app%=suffix=%.js%=version=%')
+    include _aside-wrapper
+    include _demo-control
+    include _footer
+    include _scripts

@@ -4,94 +4,54 @@
   left: 0;
 }
 
-.language,
-.icon {
+.language {
+  margin-bottom: 10px;
+
+  &_item {
+    border-bottom: 1px solid #a5a7ab;
+
+    &:last-child {
+      border: 0;
+    }
+  }
 
   &_link {
     display: block;
     width: 43px;
-    overflow: hidden;
     padding: 10px 5px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
     background-color: rgba(214, 213, 215, 0.8);
     color: #989ba0;
-    text-decoration: none;
-  }
-}
 
-.language {
-  margin-bottom: 18px;
-
-  &_link {
-
-    &:first-child {
-      border-bottom: 1px solid #a5a7ab;
-    }
-    
     &:hover {
       color: #4f555d;
     }
   }
 }
 
-.socials {
-  @extend %clearfix;
+.social {
   position: relative;
   transform: translateX(-100%);
   transition: 0.3s;
 
-  &:hover {
-    transform: translateX(0);
-
-    .general {
-      @extend .general-hover;
-    }
-  }
-}
-
-.icon {
-  &_link {
-    padding: 21px 5px;
-
-    &-facebook {
-      @extend .facebook;
-
-      &:hover {
-        @extend .facebook-hover;
-      }
-    }
-
-    &-twitter {
-      @extend .twitter;
-
-      &:hover {
-        @extend .twitter-hover;
-      }
-    }
-
-    &-vk {
-      @extend .vk;
-
-      &:hover {
-        @extend .vk-hover;
-      }
-    }
-  }
-
-  &_general {
+  &_handle {
     transform: translateX(100%);
     position: absolute;
     top: 0;
     right: 0;
   }
 
-  &_general {
-    @extend .language_link;
-    @extend .general;
-    float: right;
-    padding-bottom: 30px;
+  &_link {
+    display: block;
+    width: 43px;
+    padding: 21px 5px;
+    background-color: rgba(214, 213, 215, 0.8);
+    color: #989ba0;
+  }
 
-    &:first-child {
-      border: none;
-    }
+  &:hover {
+    transform: translateX(0);
   }
 }
