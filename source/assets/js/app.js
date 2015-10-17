@@ -86,8 +86,9 @@ $(function() {
       drag: function (e, param) {
         var x = param.position.left,
             y = param.position.top;
-
-        easel.move([x, y]);
+            console.log(x , y);
+            easel.positionLeftTopTiling([x, y]);
+        //easel.move([x, y]);
       }
     });
 

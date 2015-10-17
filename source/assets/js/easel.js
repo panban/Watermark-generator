@@ -12,6 +12,7 @@
       limit = [0, 0],
       positionSingle = [0, 0],
       positionTiling = [[0, 0], [20, 20]],
+      arrClone = [],
       SINGLE_MODE = 'SINGLE_MODE',
       TILING_MODE = 'TILING_MODE',
       mode = '';
@@ -146,7 +147,7 @@
     limit[1] = image.height - watermark.height;
   }
 
-  function createTiling() {
+  function createTiling(flag) {
     var i, j;
     var $clone = null,
         tempWidth = 0,
@@ -154,11 +155,12 @@
 
     //============================================
     // Test.
-    var gutterWidth = 20;
-    var gutterHeight = 20;
+    // смещения
+    var gutterWidth = positionTiling[1][0];
+    var gutterHeight = positionTiling[1][1];
     //============================================
 
-    tiling.countWidth = Math.round(image.width / watermark.width);
+    tiling.countWidth = Math.round(image.width / watermark.width); 
     tiling.countHeight = Math.round(image.height / watermark.height);
     tiling.width = tiling.countWidth * (watermark.width + gutterWidth) - gutterWidth;
     tiling.height = tiling.countHeight * (watermark.height + gutterHeight) - gutterHeight;
@@ -168,10 +170,18 @@
     var centeringHeight = (image.height - tiling.limiterHeight) / 2;
     var centeringWidth = (image.width - tiling.limiterWidth) / 2;
 
+    var centeringWHeight = (tiling.limiterHeight - tiling.height) / 2;
+    var centeringWWidth = (tiling.limiterWidth - tiling.width) / 2;
+    
     for (i = 0; i < tiling.countHeight; i++) {
 
       for (j = 0; j < tiling.countWidth; j++) {
-        $clone = watermark.$element.clone();
+        if (!flag) {
+          $clone = watermark.$element.clone();
+          arrClone[i*tiling.countHeight+j] = $clone;
+        } else {
+          $clone = arrClone[i*tiling.countHeight+j];
+        }
 
         $clone.css({
           left: tempWidth,
@@ -179,7 +189,7 @@
           position: 'absolute'
         });
 
-        tiling.$containerEl.append($clone);
+        if (!flag) tiling.$containerEl.append($clone);
         tempWidth += watermark.width + gutterWidth;
       }
 
@@ -187,9 +197,12 @@
       tempHeight += watermark.height + gutterHeight;
     }
 
+   
     tiling.$containerEl.css({
-      height: tiling.width,
-      width: tiling.height
+      width: tiling.width,
+      height: tiling.height,
+      top: positionTiling[0][1],
+      left: positionTiling[0][0]
     });
 
     tiling.$limiterEl.css({
@@ -198,6 +211,7 @@
       top: centeringHeight,
       left: centeringWidth
     });
+    
 
     delete tiling.uncreated;
   }
@@ -253,16 +267,23 @@
         }
       },
 
+      positionLeftTopTiling : function(position) {
+        positionTiling[0][0] = position[0];
+        positionTiling[0][1] = position[1];
+      },
+
       move: function(position) {
 
         if (mode === TILING_MODE) {
 
           if (position[0] !== null) {
             positionTiling[1][0] = position[0];
+            createTiling(true);
           }
 
           if (position[1] !== null) {
             positionTiling[1][1] = position[1];
+            createTiling(true);
           }
         } else {
 
