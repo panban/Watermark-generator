@@ -4,6 +4,7 @@
   position: relative;
   height: $height * 1px;
   background: #dbe1e8;
+  user-select: none;
 
   &_progress {
     height: $height * 1px;

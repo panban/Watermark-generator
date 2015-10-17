@@ -4,25 +4,64 @@
   var my = {},
       root = {},
       image = {},
-      tiling = {},
+      tiling = {uncreated: true},
       sector = {},
+      containers = {},
       sectorCache = {},
       watermark = {},
       limit = [0, 0],
       positionSingle = [0, 0],
-      positionTiling = [[0, 0], [0, 0]],
+      positionTiling = [[0, 0], [20, 20]],
       SINGLE_MODE = 'SINGLE_MODE',
       TILING_MODE = 'TILING_MODE',
       mode = '';
 
   publicInterface();
   init();
+  attackEvets();
 
   function init() {
+    mode = SINGLE_MODE;
     root.$element = $('.workspace_board');
     root.width = root.$element.width();
     root.height = root.$element.height();
+    containers.$image = root.$element.find('.image-container');
+    containers.$watermark = root.$element.find('.watermark-container');
+
+    tiling.$limiterEl = root.$element.find('.tiling-limiter');
+    tiling.$containerEl = root.$element.find('.tiling-container');
+  }
+
+  function attackEvets() {
+    $('.tiling-mode').on('click', onTilingMode);
+    $('.single-mode').on('click', onSingleMode)
+  }
+
+  function onTilingMode() {
+    if (tiling.uncreated) {
+      createTiling();
+    }
+
+    mode = TILING_MODE;
+    my.setOpacity();
+    containers.$watermark.hide();
+    tiling.$limiterEl.show();
+
+    my.getLimit([30, 30]),
+    my.getPosition(positionTiling[1]);
+  }
+
+  function onSingleMode() {
+    if (!tiling.uncreated) {
+      tiling.$limiterEl.hide();
+    }
+
     mode = SINGLE_MODE;
+    my.setOpacity();
+    containers.$watermark.show();
+
+    my.getLimit(limit);
+    my.getPosition(positionSingle);
   }
 
   function normalizeSize(outer, inner) {
@@ -77,13 +116,8 @@
     var centeringWidth = (root.width - image.width) / 2;
     var centeringHeight = (root.height - image.height) / 2;
 
-    if (centeringWidth) {
-      image.$element.css('left', centeringWidth);
-    }
-
-    if (centeringHeight) {
-      image.$element.css('top', centeringHeight);
-    }
+    containers.$image.css('left', centeringWidth);
+    containers.$image.css('top', centeringHeight);
   }
 
   function savePicture(picture, data) {
@@ -115,39 +149,57 @@
   function createTiling() {
     var i, j;
     var $clone = null,
-        countH = Math.round(image.width / watermark.width),
-        countV = Math.round(image.height / watermark.height),
         tempWidth = 0,
         tempHeight = 0;
 
-    tiling.$element = $('<div class="watermark-tiling"></div>');
-    tiling.$watermarks = [];
-
     //============================================
     // Test.
-    var gutterH = 20;
-    var gutterV = 20;
+    var gutterWidth = 20;
+    var gutterHeight = 20;
     //============================================
 
-    for (i = 0; i < countV; i++) {
+    tiling.countWidth = Math.round(image.width / watermark.width);
+    tiling.countHeight = Math.round(image.height / watermark.height);
+    tiling.width = tiling.countWidth * (watermark.width + gutterWidth) - gutterWidth;
+    tiling.height = tiling.countHeight * (watermark.height + gutterHeight) - gutterHeight;
+    tiling.limiterHeight = ((tiling.height + gutterHeight) * 2) - image.height;
+    tiling.limiterWidth = ((tiling.width + gutterWidth) * 2) - image.width;
 
-      for (j = 0; j < countH; j++) {
+    var centeringHeight = (image.height - tiling.limiterHeight) / 2;
+    var centeringWidth = (image.width - tiling.limiterWidth) / 2;
 
-        tiling.$watermarks.push($clone = watermark.$element.clone());
+    for (i = 0; i < tiling.countHeight; i++) {
+
+      for (j = 0; j < tiling.countWidth; j++) {
+        $clone = watermark.$element.clone();
+
         $clone.css({
           left: tempWidth,
-          top: tempHeight
+          top: tempHeight,
+          position: 'absolute'
         });
 
-        tiling.$element.append($clone);
-        tempWidth += watermark.width + gutterV;
+        tiling.$containerEl.append($clone);
+        tempWidth += watermark.width + gutterWidth;
       }
 
       tempWidth = 0;
-      tempHeight += watermark.height + gutterH;
+      tempHeight += watermark.height + gutterHeight;
     }
 
-    image.$element.append(tiling.$element);
+    tiling.$containerEl.css({
+      height: tiling.width,
+      width: tiling.height
+    });
+
+    tiling.$limiterEl.css({
+      height: tiling.limiterHeight,
+      width: tiling.limiterWidth,
+      top: centeringHeight,
+      left: centeringWidth
+    });
+
+    delete tiling.uncreated;
   }
 
   function publicInterface() {
@@ -155,14 +207,12 @@
 
       setImage: function(pictureData) {
         image = savePicture(image, pictureData);
-        image.$element = $([
-            '<div class="watermark-container">',
-              '<img class="watermark-image" src="' + image.path + '">',
-            '</div>'
-          ].join(''));
+        image.$element = $('<img class="watermark-image" src="' + image.path + '">');
 
         normalizeSize(root, image);
         centerImage();
+
+        tiling.uncreated = true;
 
         if (watermark.$element) {
           my.setWatermark({
@@ -172,7 +222,7 @@
           });
         }
 
-        root.$element.append(image.$element);
+        containers.$image.append(image.$element);
       },
 
       setWatermark: function(pictureData) {
@@ -182,39 +232,52 @@
         scaleWatermark();
         countSectorSize();
         countLimit();
+        my.setOpacity();
 
-        image.$element.append(watermark.$element);
+        containers.$watermark.append(watermark.$element);
 
         my.moveBySector(0, 0);
-
         my.getLimit(limit);
         my.getPosition(positionSingle);
-
-
-        // =========================================================
-        // Test
-        createTiling();
-        // =========================================================
       },
 
       setOpacity: function(value) {
-        watermark.opacity = value;
-        watermark.$element.css('opacity', value);
+        if (value) {
+          watermark.opacity = value;
+        }
+
+        if (mode === SINGLE_MODE) {
+          containers.$watermark.css('opacity', watermark.opacity);
+        } else {
+          tiling.$containerEl.css('opacity', watermark.opacity)
+        }
       },
 
       move: function(position) {
 
-        if (position[0] !== null) {
-          positionSingle[0] = limitPosition(position[0], true);
-          watermark.$element.css('left', positionSingle[0]);
-        }
+        if (mode === TILING_MODE) {
 
-        if (position[1] !== null) {
-          positionSingle[1] = limitPosition(position[1]);
-          watermark.$element.css('top', positionSingle[1]);
-        }
+          if (position[0] !== null) {
+            positionTiling[1][0] = position[0];
+          }
 
-        my.getPosition(positionSingle);
+          if (position[1] !== null) {
+            positionTiling[1][1] = position[1];
+          }
+        } else {
+
+          if (position[0] !== null) {
+            positionSingle[0] = limitPosition(position[0], true);
+            containers.$watermark.css('left', positionSingle[0]);
+          }
+
+          if (position[1] !== null) {
+            positionSingle[1] = limitPosition(position[1]);
+            containers.$watermark.css('top', positionSingle[1]);
+          }
+
+          my.getPosition(positionSingle);
+        }
       },
 
       moveBySector: function(stepX, stepY) {

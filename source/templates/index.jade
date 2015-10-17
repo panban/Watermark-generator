@@ -11,6 +11,10 @@ html
                 h1.workspace_header
                     span.workspace_title Генератор водяных знаков
                 .workspace_board
+                    .image-container
+                        .watermark-container
+                        .tiling-limiter
+                            .tiling-container
         .container_side
             .control
                 .control_title Настройки
@@ -30,6 +34,8 @@ html
                         input.uploader_input(type="file")
                 .control_block
                     .control_block-title Положение
+                    a.tiling-mode tiling 
+                    a.single-mode single
                     .position
                         .position_block
 
