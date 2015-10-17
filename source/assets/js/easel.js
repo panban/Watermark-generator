@@ -114,40 +114,41 @@
 
   function createTiling() {
     var i, j;
-    var $clone = null;
-
-    var gutterH = 20;
-    var gutterV = 20;
+    var $clone = null,
+        countH = Math.round(image.width / watermark.width),
+        countV = Math.round(image.height / watermark.height),
+        tempWidth = 0,
+        tempHeight = 0;
 
     tiling.$element = $('<div class="watermark-tiling"></div>');
-    tiling.countH = Math.round(image.width / watermark.width);
-    tiling.countV = Math.round(image.height / watermark.height);
-    tiling.wms = [];
+    tiling.$watermarks = [];
 
-    var w = 0;
-    var h = 0;
+    //============================================
+    // Test.
+    var gutterH = 20;
+    var gutterV = 20;
+    //============================================
 
-    for (i = 1; i < tiling.countV; i++) {
+    for (i = 0; i < countV; i++) {
 
-      for (j = 1; j < tiling.countH; j++) {
+      for (j = 0; j < countH; j++) {
 
-        tiling.wms.push($clone = watermark.$element.clone());
+        tiling.$watermarks.push($clone = watermark.$element.clone());
         $clone.css({
-          left: w,
-          top: h
+          left: tempWidth,
+          top: tempHeight
         });
 
         tiling.$element.append($clone);
-        w += watermark.width + gutterV;
+        tempWidth += watermark.width + gutterV;
       }
 
-      w = 0;
-      h += watermark.height + gutterH;
+      tempWidth = 0;
+      tempHeight += watermark.height + gutterH;
     }
 
     image.$element.append(tiling.$element);
   }
-
 
   function publicInterface() {
     my = $.extend(my, {
