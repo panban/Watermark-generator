@@ -39,7 +39,8 @@
   }
 
   &_block-title {
-    margin: 0 0 35px 0;
+    float: left;
+    margin: 0;
     font-size: 14px;
   }
 
@@ -80,6 +81,16 @@
 }
 
 
+.switch {
 
+  &-block {
+    @extend %clearfix;
+    margin-bottom: 35px;
+  }
+
+  &-mode {
+    float: right;
+  }
+}
 
 
