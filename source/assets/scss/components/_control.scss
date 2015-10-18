@@ -39,8 +39,7 @@
   }
 
   &_block-title {
-    float: left;
-    margin: 0;
+    margin: 0 0 35px 0;
     font-size: 14px;
   }
 
@@ -80,6 +79,10 @@
   }
 }
 
+.position-title {
+  float: left;
+  margin: 0;
+}
 
 .switch {
 
