@@ -61,35 +61,4 @@ $(function() {
       // Play demo view.
     ===========================================================*/
     demo.apply();
-
-
-    /*==========================================================
-      // Init drag and drop.
-    ===========================================================*/
-
-    $('.watermark-container').draggable({
-      containment: '.image-container',
-      scroll: false,
-      drag: function (e, param) {
-        var x = param.position.left,
-            y = param.position.top;
-
-        easel.move([x, y]);
-        spinnerHorizont.spinner("value", x);
-        spinnerVertical.spinner("value", y);
-      }
-    });
-
-    $('.tiling-container').draggable({
-      containment: '.tiling-limiter',
-      scroll: false,
-      drag: function (e, param) {
-        var x = param.position.left,
-            y = param.position.top;
-            console.log(x , y);
-            easel.positionLeftTopTiling([x, y]);
-        //easel.move([x, y]);
-      }
-    });
-
 });
