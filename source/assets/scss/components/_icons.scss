@@ -1,11 +1,12 @@
-.icon-40 {
+.icon-40 a,
+.icon_like {
   width: 40px;
   height: 36px;
   background-image: url('/assets/img/sprites.png');
   background-repeat: no-repeat;
 }
 
-.icon_facebook {
+.icon_facebook a {
   background-position: 5px 5px;
 
   &:hover {
@@ -21,7 +22,7 @@
   }
 }
 
-.icon_twitter {
+.icon_twitter a {
   background-position: -45px 6px;
 
   &:hover {
@@ -29,7 +30,7 @@
   }
 }
 
-.icon_vk {
+.icon_vk a {
   background-position: -93px 3px;
 
   &:hover {

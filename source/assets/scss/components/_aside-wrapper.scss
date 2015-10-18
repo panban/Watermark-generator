@@ -43,10 +43,14 @@
     right: 0;
   }
 
+  &_item {
+    position: relative;
+  }
+
+  &_item a,
   &_link {
     display: block;
     width: 43px;
-    padding: 21px 5px;
     background-color: rgba(214, 213, 215, 0.8);
     color: #989ba0;
   }
@@ -55,3 +59,26 @@
     transform: translateX(0);
   }
 }
+
+// ------------ Styles are changed default yashare icons styles --------------
+
+.social {
+  .b-share__handle {
+    float: none;
+    padding: 21px 5px !important;
+
+    .b-share-icon {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 40px;
+      height: 40px;
+      background: none;
+    }
+  }
+
+  .b-share {
+    padding: 0!important;
+  }
+}
+
