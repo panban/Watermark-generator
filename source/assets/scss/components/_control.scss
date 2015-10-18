@@ -77,23 +77,12 @@
       }
     }
   }
-}
 
-.position-title {
-  float: left;
-  margin: 0;
-}
-
-.switch {
-
-  &-block {
-    @extend %clearfix;
-    margin-bottom: 35px;
-  }
-
-  &-mode {
+  &_switch-mode {
     float: right;
+
+    a:first-child {
+      margin-right: 10px;
+    }
   }
 }
-
-

@@ -12,12 +12,12 @@ $(function() {
         var value = spinnerHorizont.spinner('value');
 
         spinnerHorizont.spinner('value', value);
-        easel.move([value, null]);
+        easel.move({left: value});
       });
     },
 
     spin: function(event, ui) {
-      easel.move([ui.value, null]);
+      easel.move({left: ui.value});
     }
   });
 
@@ -29,12 +29,12 @@ $(function() {
         var value = spinnerVertical.spinner('value');
 
         spinnerVertical.spinner('value', value);
-        easel.move([null, value]);
+        easel.move({top: value});
       });
     },
 
     spin: function(event, ui) {
-      easel.move([null, ui.value]);
+      easel.move({top: ui.value});
     }
   });
 
@@ -52,8 +52,8 @@ $(function() {
    }
 
    easel.getPosition = function(position) {
-     spinnerHorizont.spinner('value', position[0]);
-     spinnerVertical.spinner('value', position[1]);
+     spinnerHorizont.spinner('value', position.left);
+     spinnerVertical.spinner('value', position.top);
    }
 
 

@@ -23,8 +23,6 @@ html
                         .uploader_field Изображение отсутствует
                         a.uploader_button
                         input.uploader_input(type="file")
-                    #progress
-                        .bar(style="width: 0%")
 
                     .uploader-label Водяной знак
                     label.uploader
@@ -32,11 +30,11 @@ html
                         a.uploader_button
                         input.uploader_input(type="file")
                 .control_block
-                    .switch-block
-                        .control_block-title.position-title Положение
-                        .switch-mode
-                            a.tiling-mode.icon_switch-mode.active tiling
-                            a.single-mode.icon_switch-mode single
+                    .control_header
+                        .control_switch-mode.js-switch-mode
+                            a.icon_switch-mode.active(data-mode="tiling" href="")
+                            a.icon_switch-single(data-mode="single" href="")
+                        .control_block-title Положение
                     .position
                         .position_block
 

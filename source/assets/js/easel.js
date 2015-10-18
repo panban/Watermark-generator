@@ -4,15 +4,19 @@
   var my = {},
       root = {},
       image = {},
-      tiling = {uncreated: true},
+      tiling = {
+        uncreated: true,
+        gutterLeft: 20,
+        gutterTop: 20,
+        left: 0,
+        top: 0
+      },
+      opacity = 1,
       sector = {},
       containers = {},
       sectorCache = {},
       watermark = {},
       limit = [0, 0],
-      positionSingle = [0, 0],
-      positionTiling = [[0, 0], [20, 20]],
-      arrClone = [],
       SINGLE_MODE = 'SINGLE_MODE',
       TILING_MODE = 'TILING_MODE',
       mode = '';
@@ -34,14 +38,27 @@
   }
 
   function attackEvets() {
-    $('.tiling-mode').on('click', onTilingMode);
-    $('.single-mode').on('click', onSingleMode);
+
+    $('.js-switch-mode').on('click', 'a', function(e) {
+      var mode = $(this).data('mode');
+
+      if (mode === 'single') {
+        onSingleMode();
+      } else {
+        onTilingMode();
+      }
+
+      e.preventDefault();
+    });
 
     $('.watermark-container').draggable({
       containment: '.image-container',
       scroll: false,
       drag: function (e, ui) {
-        my.move([ui.position.left, ui.position.top]);
+        my.move({
+          left: ui.position.left,
+          top: ui.position.top
+        });
       }
     });
 
@@ -53,13 +70,13 @@
             limitWidth = image.width - tiling.width,
             limitHeight = image.height - tiling.height;
 
-        if(x > positionTiling[1][0]) x = positionTiling[1][0];
-        if(y > positionTiling[1][1]) y = positionTiling[1][1];
-        if(x < limitWidth)           x = limitWidth;
-        if(y < limitHeight)          y = limitHeight;
+        if(x > tiling.gutterLeft) x = tiling.gutterLeft;
+        if(y > tiling.gutterTop)  y = tiling.gutterTop;
+        if(x < limitWidth)        x = limitWidth;
+        if(y < limitHeight)       y = limitHeight;
 
-        ui.position.left = positionTiling[0][0] = x;
-        ui.position.top = positionTiling[0][1] = y;
+        tiling.left = ui.position.left = x;
+        tiling.top = ui.position.top = y;
       }
     });
   }
@@ -75,7 +92,10 @@
     tiling.$containerEl.show();
 
     my.getLimit([100, 100]),
-    my.getPosition(positionTiling[1]);
+    my.getPosition({
+      left: tiling.gutterLeft,
+      top: tiling.gutterTop
+    });
   }
 
   function onSingleMode() {
@@ -88,7 +108,10 @@
     containers.$watermark.show();
 
     my.getLimit(limit);
-    my.getPosition(positionSingle);
+    my.getPosition({
+      left: watermark.left,
+      top: watermark.top
+    });
   }
 
   function normalizeSize(outer, inner) {
@@ -168,43 +191,32 @@
     sector.centerHeight = Math.round((sector.height - watermark.height) / 2);
   }
 
-  function countLimit() {
+  function countLimit(type) {
     limit[0] = image.width - watermark.width;
     limit[1] = image.height - watermark.height;
   }
 
   function createTiling(flag) {
-    var i, j;
-    var $clone = null,
-        tempWidth = 0,
-        tempHeight = 0;
+    var i, l;
+    var $clone = null;
 
-    //============================================
-    // Test.
-    // смещения
-    var gutterWidth = positionTiling[1][0];
-    var gutterHeight = positionTiling[1][1];
-    //============================================
-
-    tiling.$wms = [];
-    tiling.countWidth = Math.round(image.width / watermark.width); 
+    tiling.wms = [];
+    tiling.countWidth = Math.round(image.width / watermark.width);
     tiling.countHeight = Math.round(image.height / watermark.height);
-    tiling.width = tiling.countWidth * (watermark.width + gutterWidth);
-    tiling.height = tiling.countHeight * (watermark.height + gutterHeight);
+    tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft);
+    tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop);
 
-    var count = tiling.countHeight * tiling.countWidth;
+    for (i = 0, l = tiling.countHeight * tiling.countWidth; i < l; i++) {
 
-    for (i = 0; i < count; i++) {
       $clone = watermark.$element.clone();
-      tiling.$wms.push($clone);
-
       $clone.css({
         'float': 'left',
-        'margin-right': gutterWidth,
-        'margin-bottom': gutterHeight
+        'margin-right': tiling.gutterLeft,
+        'margin-bottom': tiling.gutterTop
       });
 
       tiling.$containerEl.append($clone);
+      tiling.wms.push($clone);
     }
 
     tiling.$containerEl.css({
@@ -215,23 +227,23 @@
     delete tiling.uncreated;
   }
 
-  function gutter(position) {
+  function setGutter(position) {
     var i, l;
 
-    if (position[0] !== null) {
-      positionTiling[1][0] = position[0];
-      tiling.width = tiling.countWidth * (watermark.width + positionTiling[1][0]);
+    if (position.left !== null) {
+      tiling.gutterLeft = position.left;
+      tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft);
       tiling.$containerEl.css('width', tiling.width);
     } else {
-      positionTiling[1][1] = position[1];
-      tiling.height = tiling.countHeight * (watermark.height + positionTiling[1][1]);
+      tiling.gutterTop = position.top;
+      tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop);
       tiling.$containerEl.css('height', tiling.height);
     }
 
-    for (i = 0, l = tiling.$wms.length; i < l; i++) {
-      tiling.$wms[i].css({
-        marginRight: positionTiling[1][0],
-        marginBottom: positionTiling[1][1]
+    for (i = 0, l = tiling.wms.length; i < l; i++) {
+      tiling.wms[i].css({
+        marginRight: tiling.gutterLeft,
+        marginBottom: tiling.gutterTop
       });
     }
   }
@@ -272,38 +284,44 @@
 
         my.moveBySector(0, 0);
         my.getLimit(limit);
-        my.getPosition(positionSingle);
+        my.getPosition({
+          left: watermark.left,
+          top: watermark.top
+        });
       },
 
       setOpacity: function(value) {
         if (value) {
-          watermark.opacity = value;
+          opacity = value;
         }
 
         if (mode === SINGLE_MODE) {
-          containers.$watermark.css('opacity', watermark.opacity);
+          containers.$watermark.css('opacity', opacity);
         } else {
-          tiling.$containerEl.css('opacity', watermark.opacity)
+          tiling.$containerEl.css('opacity', opacity)
         }
       },
 
       move: function(position) {
 
         if (mode === TILING_MODE) {
-          gutter(position);
+          setGutter(position);
         } else {
 
-          if (position[0] !== null) {
-            positionSingle[0] = limitPosition(position[0], true);
-            containers.$watermark.css('left', positionSingle[0]);
+          if (position.left !== null) {
+            watermark.left = limitPosition(position.left, true);
+            containers.$watermark.css('left', watermark.left);
           }
 
-          if (position[1] !== null) {
-            positionSingle[1] = limitPosition(position[1]);
-            containers.$watermark.css('top', positionSingle[1]);
+          if (position.top !== null) {
+            watermark.top = limitPosition(position.top);
+            containers.$watermark.css('top', watermark.top);
           }
 
-          my.getPosition(positionSingle);
+          my.getPosition({
+            left: watermark.left,
+            top: watermark.top
+          });
         }
       },
 
@@ -316,7 +334,34 @@
           sectorCache[sectorName][1] = sector.centerHeight + sector.height * stepY;
         }
 
-        my.move([sectorCache[sectorName][0], sectorCache[sectorName][1]]);
+        my.move({
+          left: sectorCache[sectorName][0],
+          top: sectorCache[sectorName][1]
+        });
+      },
+
+      getSettings: function() {
+        var position = [[]],
+            settings = {};
+
+        if (mode === SINGLE_MODE) {
+          position[0][0] = watermark.left;
+          position[0][1] = watermark.top;
+        } else {
+          position[0][0] = tiling.left;
+          position[0][1] = tiling.top;
+          position.push([tiling.gutterLeft, tiling.gutterTop]);
+        }
+
+        settings = {
+          imagePath: image.path,
+          watermarkPaht: watermark.path,
+          watermarkScale: '',
+          opacity: opacity,
+          position: position
+        };
+
+        return settings;
       },
 
       getLimit: function(limit) {},
