@@ -32,9 +32,11 @@ html
                         a.uploader_button
                         input.uploader_input(type="file")
                 .control_block
-                    .control_block-title Положение
-                    a.tiling-mode tiling 
-                    a.single-mode single
+                    .switch-block
+                        .control_block-title.position-title Положение
+                        .switch-mode
+                            a.tiling-mode.icon_switch-mode.active tiling
+                            a.single-mode.icon_switch-mode single
                     .position
                         .position_block
 

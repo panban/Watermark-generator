@@ -37,3 +37,33 @@
     background-position: -93px -47px;
   }
 }
+
+
+// ----------- switch mode buttons -----------
+
+.icon_switch-mode {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background: url('/assets/img/sprites.png') no-repeat;
+  text-indent: -9999px;
+  cursor: pointer;
+}
+
+.tiling-mode {
+  background-position: -106px -128px;
+
+  &:hover,
+  &.active {
+    background-position: -106px -152px;
+  }
+}
+.single-mode {
+  margin-left: 10px;
+  background-position: -105px -82px;
+
+  &:hover,
+  &.active {
+    background-position: -105px -105px;
+  }
+}

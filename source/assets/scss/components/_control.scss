@@ -79,7 +79,21 @@
   }
 }
 
+.position-title {
+  float: left;
+  margin: 0;
+}
 
+.switch {
 
+  &-block {
+    @extend %clearfix;
+    margin-bottom: 35px;
+  }
+
+  &-mode {
+    float: right;
+  }
+}
 
 
