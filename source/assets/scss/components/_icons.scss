@@ -46,11 +46,11 @@
   height: 20px;
   display: inline-block;
   background: url('/assets/img/sprites.png') no-repeat;
-  background-position: -106px -128px;
+  background-position: -106px -138px;
 
   &:hover,
   &.active {
-    background-position: -106px -152px;
+    background-position: -106px -162px;
   }
 }
 
@@ -59,10 +59,10 @@
   height: 20px;
   display: inline-block;
   background: url('/assets/img/sprites.png') no-repeat;
-  background-position: -105px -82px;
+  background-position: -105px -92px;
 
   &:hover,
   &.active {
-    background-position: -105px -105px;
+    background-position: -105px -115px;
   }
 }
