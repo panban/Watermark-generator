@@ -59,26 +59,33 @@
           left: ui.position.left,
           top: ui.position.top
         });
+
+        my.getPosition({
+          left: watermark.left,
+          top: watermark.top
+        });
       }
     });
 
     $('.tiling-container').draggable({
       scroll: false,
-      drag: function (e, ui) {
-        var x = ui.position.left,
-            y = ui.position.top,
-            limitWidth = image.width - tiling.width,
-            limitHeight = image.height - tiling.height;
-
-        if(x > tiling.gutterLeft) x = tiling.gutterLeft;
-        if(y > tiling.gutterTop)  y = tiling.gutterTop;
-        if(x < limitWidth)        x = limitWidth;
-        if(y < limitHeight)       y = limitHeight;
-
-        tiling.left = ui.position.left = x;
-        tiling.top = ui.position.top = y;
-      }
+      drag: onDragTiling
     });
+  }
+
+  function onDragTiling(e, ui) {
+    var x = ui.position.left,
+        y = ui.position.top,
+        limitWidth = image.width - tiling.width,
+        limitHeight = image.height - tiling.height;
+
+    if(x > tiling.gutterLeft) x = tiling.gutterLeft;
+    if(y > tiling.gutterTop)  y = tiling.gutterTop;
+    if(x < limitWidth)        x = limitWidth;
+    if(y < limitHeight)       y = limitHeight;
+
+    tiling.left = ui.position.left = x;
+    tiling.top = ui.position.top = y;
   }
 
   function onTilingMode() {
@@ -196,7 +203,7 @@
     limit[1] = image.height - watermark.height;
   }
 
-  function createTiling(flag) {
+  function createTiling() {
     var i, l;
     var $clone = null;
 
@@ -234,7 +241,9 @@
       tiling.gutterLeft = position.left;
       tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft);
       tiling.$containerEl.css('width', tiling.width);
-    } else {
+    }
+
+    if (position.top !== null) {
       tiling.gutterTop = position.top;
       tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop);
       tiling.$containerEl.css('height', tiling.height);
@@ -245,6 +254,19 @@
         marginRight: tiling.gutterLeft,
         marginBottom: tiling.gutterTop
       });
+    }
+  }
+
+  function setPosition(position) {
+
+    if (position.left !== null) {
+      watermark.left = limitPosition(position.left, true);
+      containers.$watermark.css('left', watermark.left);
+    }
+
+    if (position.top !== null) {
+      watermark.top = limitPosition(position.top);
+      containers.$watermark.css('top', watermark.top);
     }
   }
 
@@ -304,24 +326,10 @@
 
       move: function(position) {
 
-        if (mode === TILING_MODE) {
-          setGutter(position);
+        if (mode === SINGLE_MODE) {
+          setPosition(position);
         } else {
-
-          if (position.left !== null) {
-            watermark.left = limitPosition(position.left, true);
-            containers.$watermark.css('left', watermark.left);
-          }
-
-          if (position.top !== null) {
-            watermark.top = limitPosition(position.top);
-            containers.$watermark.css('top', watermark.top);
-          }
-
-          my.getPosition({
-            left: watermark.left,
-            top: watermark.top
-          });
+          setGutter(position);
         }
       },
 
