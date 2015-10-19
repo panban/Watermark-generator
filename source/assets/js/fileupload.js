@@ -3,17 +3,16 @@
 
     $('.uploader_input').fileupload({
 
-        url: '/assets/php/',
-        dataType: 'json',
-        type: 'GET',
-        add: function() {
+        url: '/assets/php/fileupload.php',
+        add: function(e, data) {
             console.log('add');
+            data.submit();
         },
 
-        done: function() {
-            console.log('done')
+        done: function(e, data) {
+            console.log('done');
+            console.log(data.result.files);
         }
-
 
     });
 
