@@ -1,23 +1,25 @@
-;(function(window, $) {
-    'use strict';
+(function(window, $) {
+  'use strict';
 
-    $('.uploader_input').fileupload({
+  $('.uploader_input').fileupload({
 
-        url: '/assets/php/',
-        dataType: 'json',
-        type: 'GET',
-        add: function() {
-            console.log('add');
-        },
+    url: '/',
+    dataType: 'json',
+    type: 'POST',
 
-        done: function() {
-            console.log('done')
-        }
+    add: function() {
+      // TODO: Check uploaded file.
+    },
 
+    done: function(e, response) {
+      var parseResponse = JSON.parse(response);
+      var uploadType = $(this).data('upload-type');
 
-    });
-
-
-
-
+      if (uploadType === 'image') {
+        easel.setImage(parseResponse);
+      } else {
+        easel.setWatermark(parseResponse);
+      }
+    }
+  });
 })(window, jQuery);

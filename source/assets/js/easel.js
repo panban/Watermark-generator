@@ -71,6 +71,26 @@
       scroll: false,
       drag: onDragTiling
     });
+
+    $('.js-download').on('click', send);
+  }
+
+  function send() {
+    var JSONSettings = JSON.stringify(my.getSettings());
+
+    if (!watermark.$element) {
+      return;
+    }
+
+    console.log(JSONSettings);
+
+    $.ajax({
+      url: '/',
+      type: 'POST',
+      data: JSONSettings,
+
+      success: function() {}
+    });
   }
 
   function onDragTiling(e, ui) {
@@ -237,13 +257,13 @@
   function setGutter(position) {
     var i, l;
 
-    if (position.left !== null) {
+    if (position.left != null) {
       tiling.gutterLeft = position.left;
       tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft);
       tiling.$containerEl.css('width', tiling.width);
     }
 
-    if (position.top !== null) {
+    if (position.top != null) {
       tiling.gutterTop = position.top;
       tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop);
       tiling.$containerEl.css('height', tiling.height);
@@ -259,12 +279,12 @@
 
   function setPosition(position) {
 
-    if (position.left !== null) {
+    if (position.left != null) {
       watermark.left = limitPosition(position.left, true);
       containers.$watermark.css('left', watermark.left);
     }
 
-    if (position.top !== null) {
+    if (position.top != null) {
       watermark.top = limitPosition(position.top);
       containers.$watermark.css('top', watermark.top);
     }
@@ -364,7 +384,7 @@
         settings = {
           imagePath: image.path,
           watermarkPaht: watermark.path,
-          watermarkScale: '',
+          watermarkScale: watermark.scale,
           opacity: opacity,
           position: position
         };

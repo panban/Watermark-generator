@@ -22,13 +22,13 @@ html
                     label.uploader
                         .uploader_field Изображение отсутствует
                         a.uploader_button
-                        input.uploader_input(type="file")
+                        input.uploader_input(type="file" data-upload-type="image")
 
                     .uploader-label Водяной знак
                     label.uploader
                         .uploader_field Изображение отсутствует
                         a.uploader_button
-                        input.uploader_input(type="file")
+                        input.uploader_input(type="file" data-upload-type="watermark")
                 .control_block
                     .control_header
                         .control_switch-mode.js-switch-mode
@@ -67,7 +67,7 @@ html
                     include _range
                 .control_button-group
                     button.control_button-reset Сброс
-                    button.control_button-download Скачать
+                    button.control_button-download.js-download Скачать
 
     include _aside-wrapper
     include _demo-control
