@@ -31,15 +31,15 @@ html
                         input.uploader_input(type="file" data-upload-type="watermark" name="watermark")
                 .control_block
                     .control_header
-                        .switch-mode.js-switch-mode
-                            a.switch-mode_item.icon_switch-single.active(data-mode="single" href="")
-                            a.switch-mode_item.icon_switch-mode(data-mode="tiling" href="")
+                        .switcher.js-switcher
+                            a.switcher_item.icon_switch-single.switcher_item--active(data-mode="single" href="")
+                            a.switcher_item.icon_switch-mode(data-mode="tiling" href="")
                         .control_block-title Положение
                     .position
                         .position_block
 
-                            .position-area
-                                a.position-area--current(href="" data-step-x="0" data-step-y="0")
+                            .sector.sector--cross
+                                a.sector--current(href="" data-step-x="0" data-step-y="0")
                                 a(href="" data-step-x="1" data-step-y="0")
                                 a(href="" data-step-x="2" data-step-y="0")
                                 a(href="" data-step-x="0" data-step-y="1")
@@ -48,8 +48,9 @@ html
                                 a(href="" data-step-x="0" data-step-y="2")
                                 a(href="" data-step-x="1" data-step-y="2")
                                 a(href="" data-step-x="2" data-step-y="2")
-                                .position-area_cross-line
-                                .position-area_main-line
+                                .sector_cross
+                                    .sector_cross-line
+                                    .sector_main-line
 
                         .position_block
                             .position_spinner

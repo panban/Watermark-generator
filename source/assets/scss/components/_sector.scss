@@ -1,4 +1,4 @@
-.position-area {
+.sector {
   $partSize: 34;
 
   @extend %clearfix;
@@ -23,10 +23,18 @@
   }
 
   &_cross-line {
-    right: 2px;
     height: 0;
     max-height: 100%;
     margin: auto;
+  }
+
+  &_cross {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 2px;
+    bottom: 0;
   }
 
   a {
@@ -37,11 +45,11 @@
     background: #dbe1e8;
     margin: -1px 0 0 -1px;
 
-    &:hover:not(.position-area--current) {
+    &:hover:not(.sector--current) {
       background: darken(#dbe1e8, 5%);
     }
 
-    &.position-area--current {
+    &.sector--current {
       background: #f97e76;
     }
   }

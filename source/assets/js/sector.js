@@ -2,31 +2,39 @@
   'use strict';
 
   var my = {},
-      $rootEl = null,
-      $linkEls = null,
+      $root = null,
+      $links = null,
+      $cross = null,
+      $activeLink = null,
+      crossLine = {},
+      mainLine = {},
       sectorsCache = {},
-      activeClass = 'position-area--current';
+      activeClass = 'sector--current';
 
   publicInterface();
   init();
   attachEvents();
 
   function init() {
-    $rootEl = $('.position-area');
-    $linkEls = $rootEl.find('a');
+    $root = $('.sector');
+    $cross = $root.find('.sector_cross')
+    $links = $root.find('a');
+    crossLine.$element = $root.find('.sector_cross-line');
+    mainLine.$element = $root.find('.sector_main-line');
 
     saveSectors();
   }
 
   function attachEvents() {
 
-    $rootEl.on('click', 'a', onClick);
+    $root.on('click', 'a', onClick);
   }
 
   function updateLinks($link) {
-    $linkEls.removeClass(activeClass);
+    $links.removeClass(activeClass);
 
     if ($link) {
+      $activeLink = $link;
       $link.addClass(activeClass);
     }
   }
@@ -40,7 +48,7 @@
 
   function saveSectors() {
 
-    $linkEls.each(function(i, link) {
+    $links.each(function(i, link) {
       var $link = $(link);
       var y = $link.data('step-y');
       var x = $link.data('step-x');
@@ -67,10 +75,21 @@
         updateLinks($link);
       },
 
-      toggleMode: function() {
+      toggleMode: function(type) {
 
-        updateLinks();
-        $rootEl.off('click', 'a', onClick);
+        if (type === 'tiling') {
+          updateLinks();
+          $cross.show();
+
+          // ============================================
+          // TODO
+          crossLine.$element.css({height: 5})
+          mainLine.$element.css({width: 5});
+          // ============================================
+        } else {
+          $cross.hide();
+          updateLinks($activeLink);
+        }
       },
 
       // callbacks

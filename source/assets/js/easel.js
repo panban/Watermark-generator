@@ -7,10 +7,7 @@
       tiling = {
         uncreated: true,
         gutterLeft: 20,
-        gutterTop: 20,
-        // left: 0,
-        // top: 0,
-        // wms: []
+        gutterTop: 20
       },
       opacity = 1,
       sector = {},
@@ -80,8 +77,8 @@
     containers.$watermark.hide();
     tiling.$containerEl.show();
 
-    my.setOpacity();
-    my.getLimit([100, 100]),
+    my.setOpacity(opacity);
+    my.getLimit([image.width / 2, image.height / 2]),
     my.getPosition({
       left: tiling.gutterLeft,
       top: tiling.gutterTop
@@ -97,7 +94,7 @@
 
     containers.$watermark.show();
 
-    my.setOpacity();
+    my.setOpacity(opacity);
     my.getLimit(limit);
     my.getPosition({
       left: watermark.left,
@@ -286,7 +283,7 @@
         scaleWatermark();
         countSectorSize();
         countLimit();
-        my.setOpacity();
+        my.setOpacity(opacity);
 
         containers.$watermark.append(watermark.$element);
 
@@ -298,15 +295,14 @@
       },
 
       setOpacity: function(value) {
-        if (value !== null) {
-          opacity = value;
-        }
 
         if (mode === SINGLE_MODE) {
-          containers.$watermark.css('opacity', opacity);
+          containers.$watermark.css('opacity', value);
         } else {
-          tiling.$containerEl.css('opacity', opacity)
+          tiling.$containerEl.css('opacity', value)
         }
+
+        opacity = value;
       },
 
       move: function(position) {
@@ -377,7 +373,7 @@
         my.setOpacity(1);
       },
 
-      switchMode: function(mode) {
+      toggleMode: function(mode) {
 
         if (mode === 'single') {
           onSingleMode();

@@ -48,8 +48,9 @@
   background: url('/assets/img/sprites.png') no-repeat;
   background-position: -106px -138px;
 
-  &:hover,
-  &.active {
+  // TODO: refactor.
+  &.switcher_item--active,
+  &:hover {
     background-position: -106px -162px;
   }
 }
@@ -61,8 +62,9 @@
   background: url('/assets/img/sprites.png') no-repeat;
   background-position: -105px -92px;
 
-  &:hover,
-  &.active {
+  // TODO: refactor.
+  &.switcher_item--active,
+  &:hover {
     background-position: -105px -115px;
   }
 }

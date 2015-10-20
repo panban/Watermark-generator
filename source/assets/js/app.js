@@ -25,9 +25,9 @@
 
   function attachEvents() {
 
-    $('.js-reset').on('click', easel.reset);
+    $('.js-reset').on('click', reset);
     $('.js-download').on('click', download);
-    $('.js-switch-mode').on('click', 'a', switchMode);
+    $('.js-switcher').on('click', 'a', toggleMode);
   }
 
   function uploaded(inputType, response) {
@@ -42,6 +42,10 @@
     sector.setActive(0, 0)
   }
 
+  function reset() {
+    easel.reset();
+    sector.setActive(0, 0);
+  }
 
   function initSpinners() {
     var optionsH = {
@@ -82,17 +86,18 @@
     $spinnerY = $('.js-spinner-y').spinner(optionsV);
   }
 
-  function switchMode(e) {
+  function toggleMode(e) {
     var $this = $(this),
         mode = $this.data('mode');
 
-    easel.switchMode(mode);
+    easel.toggleMode(mode);
+    sector.toggleMode(mode);
 
     $this
       .siblings()
-      .removeClass('active')
+      .removeClass('switcher_item--active')
       .end()
-      .addClass('active')
+      .addClass('switcher_item--active')
 
     e.preventDefault();
   }
