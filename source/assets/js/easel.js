@@ -8,8 +8,9 @@
         uncreated: true,
         gutterLeft: 20,
         gutterTop: 20,
-        left: 0,
-        top: 0
+        // left: 0,
+        // top: 0,
+        // wms: []
       },
       opacity = 1,
       sector = {},
@@ -23,7 +24,7 @@
 
   publicInterface();
   init();
-  attackEvets();
+  attachEvets();
 
   function init() {
     mode = SINGLE_MODE;
@@ -37,19 +38,7 @@
     tiling.$containerEl = root.$element.find('.tiling-container');
   }
 
-  function attackEvets() {
-
-    $('.js-switch-mode').on('click', 'a', function(e) {
-      var mode = $(this).data('mode');
-
-      if (mode === 'single') {
-        onSingleMode();
-      } else {
-        onTilingMode();
-      }
-
-      e.preventDefault();
-    });
+  function attachEvets() {
 
     $('.watermark-container').draggable({
       containment: '.image-container',
@@ -59,35 +48,12 @@
           left: ui.position.left,
           top: ui.position.top
         });
-
-        my.getPosition({
-          left: watermark.left,
-          top: watermark.top
-        });
       }
     });
 
     $('.tiling-container').draggable({
       scroll: false,
       drag: onDragTiling
-    });
-
-    $('.js-download').on('click', send);
-  }
-
-  function send() {
-    var JSONSettings = JSON.stringify(my.getSettings());
-
-    if (!watermark.$element) {
-      return;
-    }
-
-    $.ajax({
-      url: '/',
-      type: 'POST',
-      data: JSONSettings,
-
-      success: function() {}
     });
   }
 
@@ -111,16 +77,17 @@
       createTiling();
     }
 
-    mode = TILING_MODE;
-    my.setOpacity();
     containers.$watermark.hide();
     tiling.$containerEl.show();
 
+    my.setOpacity();
     my.getLimit([100, 100]),
     my.getPosition({
       left: tiling.gutterLeft,
       top: tiling.gutterTop
     });
+
+    mode = TILING_MODE;
   }
 
   function onSingleMode() {
@@ -128,15 +95,16 @@
       tiling.$containerEl.hide();
     }
 
-    mode = SINGLE_MODE;
-    my.setOpacity();
     containers.$watermark.show();
 
+    my.setOpacity();
     my.getLimit(limit);
     my.getPosition({
       left: watermark.left,
       top: watermark.top
     });
+
+    mode = SINGLE_MODE;
   }
 
   function normalizeSize(outer, inner) {
@@ -207,7 +175,7 @@
     return picture;
   }
 
-  function countSectorSize(stepX, stepY) {
+  function countSectorSize(x, y) {
     sectorCache = {};
 
     sector.width = Math.round(image.width / 3);
@@ -322,7 +290,6 @@
 
         containers.$watermark.append(watermark.$element);
 
-        my.moveBySector(0, 0);
         my.getLimit(limit);
         my.getPosition({
           left: watermark.left,
@@ -331,7 +298,7 @@
       },
 
       setOpacity: function(value) {
-        if (value) {
+        if (value !== null) {
           opacity = value;
         }
 
@@ -346,28 +313,34 @@
 
         if (mode === SINGLE_MODE) {
           setPosition(position);
+
+          my.getPosition({
+            left: watermark.left,
+            top: watermark.top
+          });
+
         } else {
           setGutter(position);
+
+          my.getPosition({
+            left: tiling.gutterLeft,
+            top: tiling.gutterTop
+          });
         }
       },
 
-      moveBySector: function(stepX, stepY) {
-        var sectorName = stepX + '.' + stepY;
+      moveBySector: function(x, y) {
+        var sectorName = x + '.' + y;
 
         if (!sectorCache[sectorName]) {
           sectorCache[sectorName] = [];
-          sectorCache[sectorName][0] = sector.centerWidth + sector.width * stepX;
-          sectorCache[sectorName][1] = sector.centerHeight + sector.height * stepY;
+          sectorCache[sectorName][0] = sector.centerWidth + sector.width * x;
+          sectorCache[sectorName][1] = sector.centerHeight + sector.height * y;
         }
 
         my.move({
           left: sectorCache[sectorName][0],
           top: sectorCache[sectorName][1]
-        });
-
-        my.getPosition({
-          left: watermark.left,
-          top: watermark.top
         });
       },
 
@@ -395,6 +368,25 @@
         return settings;
       },
 
+      reset: function() {
+        var position = (mode === SINGLE_MODE)
+          ? {left: 0,top: 0}
+          : {left: 20, top: 20};
+
+        my.move(position)
+        my.setOpacity(1);
+      },
+
+      switchMode: function(mode) {
+
+        if (mode === 'single') {
+          onSingleMode();
+        } else {
+          onTilingMode();
+        }
+      },
+
+      // callbacks
       getLimit: function(limit) {},
 
       getPosition: function(position) {},

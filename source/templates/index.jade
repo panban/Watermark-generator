@@ -22,32 +22,32 @@ html
                     label.uploader
                         .uploader_field Изображение отсутствует
                         a.uploader_button
-                        input.uploader_input(type="file" data-upload-type="image")
+                        input.uploader_input(type="file" data-upload-type="image" name="image")
 
                     .uploader-label Водяной знак
                     label.uploader
                         .uploader_field Изображение отсутствует
                         a.uploader_button
-                        input.uploader_input(type="file" data-upload-type="watermark")
+                        input.uploader_input(type="file" data-upload-type="watermark" name="watermark")
                 .control_block
                     .control_header
-                        .control_switch-mode.js-switch-mode
-                            a.icon_switch-mode.active(data-mode="tiling" href="")
-                            a.icon_switch-single(data-mode="single" href="")
+                        .switch-mode.js-switch-mode
+                            a.switch-mode_item.icon_switch-single.active(data-mode="single" href="")
+                            a.switch-mode_item.icon_switch-mode(data-mode="tiling" href="")
                         .control_block-title Положение
                     .position
                         .position_block
 
                             .position-area
-                                a.position-area--current(href="#" data-step-x="0" data-step-y="0")
-                                a(href="#" data-step-x="1" data-step-y="0")
-                                a(href="#" data-step-x="2" data-step-y="0")
-                                a(href="#" data-step-x="0" data-step-y="1")
-                                a(href="#" data-step-x="1" data-step-y="1")
-                                a(href="#" data-step-x="2" data-step-y="1")
-                                a(href="#" data-step-x="0" data-step-y="2")
-                                a(href="#" data-step-x="1" data-step-y="2")
-                                a(href="#" data-step-x="2" data-step-y="2")
+                                a.position-area--current(href="" data-step-x="0" data-step-y="0")
+                                a(href="" data-step-x="1" data-step-y="0")
+                                a(href="" data-step-x="2" data-step-y="0")
+                                a(href="" data-step-x="0" data-step-y="1")
+                                a(href="" data-step-x="1" data-step-y="1")
+                                a(href="" data-step-x="2" data-step-y="1")
+                                a(href="" data-step-x="0" data-step-y="2")
+                                a(href="" data-step-x="1" data-step-y="2")
+                                a(href="" data-step-x="2" data-step-y="2")
                                 .position-area_cross-line
                                 .position-area_main-line
 
@@ -55,18 +55,18 @@ html
                             .position_spinner
                                 .spinner
                                     .spinner_axis X
-                                    input.spinner_input(type="text" id="spinnerHorizont")
+                                    input.spinner_input.js-spinner-x
 
                             .position_spinner
                                 .spinner
                                     .spinner_axis Y
-                                    input.spinner_input(type="text" id="spinnerVertical")
+                                    input.spinner_input.js-spinner-y 
 
                 .control_block
                     .control_block-title Прозрачность
                     include _range
                 .control_button-group
-                    button.control_button-reset Сброс
+                    button.control_button-reset.js-reset Сброс
                     button.control_button-download.js-download Скачать
 
     include _aside-wrapper

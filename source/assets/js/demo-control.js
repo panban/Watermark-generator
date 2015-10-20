@@ -58,6 +58,8 @@
     buttonImageEl.on('click', function() {
       flag = true;
       easel.setImage(getImage());
+      easel.moveBySector(0, 0);
+      sector.setActive(0, 0);
     });
 
     buttonWmEl.on('click', function() {
@@ -66,14 +68,19 @@
       }
 
       easel.setWatermark(getWatermark());
+      easel.moveBySector(0, 0);
+      sector.setActive(0, 0);
     });
   }
 
   function publicInterface() {
     my = $.extend(my, {
+
       apply: function() {
         easel.setImage(demoData['1500x1500']);
         easel.setWatermark(demoData['256x256']);
+        easel.moveBySector(0, 0);
+        sector.setActive(0, 0);
       }
     });
   }

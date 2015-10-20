@@ -1,33 +1,46 @@
+// custom dependencies: easel, range, sector;
+
 (function(window, $) {
   'use strict';
 
-  var options = {
-    url: '/',
-    dataType: 'json',
-    type: 'POST',
-    add: add,
-    done: done
-  };
+  var my = {},
+      options = {
+        url: '/',
+        dataType: 'json',
+        type: 'POST',
+        add: add,
+        done: done
+      };
+
+  publicInterface();
+  init();
+
+  function init() {
+
+    $('.uploader_input').fileupload(options);
+  }
 
   function done(e, response) {
     var parseResponse = JSON.parse(response);
-    var uploadType = $(this).data('upload-type');
+    var inputType = $(this).data('upload-type');
 
-    if (uploadType === 'image') {
-      easel.setImage(parseResponse);
-    } else {
-      easel.setWatermark(parseResponse);
-    }
-    
+    my.uploaded(inputType, parseResponse);
   }
 
-  function add(e, data) {
+  function add(e) {
     // TODO: Check uploaded file.
-    console.log(data.files[0].name);
-    console.log(data.files[0].size);
-    console.log(data.files[0].type);
+    // console.log(data.files[0].name);
+    // console.log(data.files[0].size);
+    // console.log(data.files[0].type);
   }
 
-  $('.uploader_input').fileupload(options);
+  function publicInterface() {
+    my = $.extend(my, {
 
+      // callbacks
+      uploaded: function(inputType, response) {}
+    });
+  }
+
+  window.fileupload = my;
 })(window, jQuery);
