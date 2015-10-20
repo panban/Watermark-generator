@@ -82,8 +82,6 @@
       return;
     }
 
-    console.log(JSONSettings);
-
     $.ajax({
       url: '/',
       type: 'POST',
@@ -365,6 +363,11 @@
         my.move({
           left: sectorCache[sectorName][0],
           top: sectorCache[sectorName][1]
+        });
+
+        my.getPosition({
+          left: watermark.left,
+          top: watermark.top
         });
       },
 
