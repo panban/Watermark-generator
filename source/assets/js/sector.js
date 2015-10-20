@@ -9,6 +9,7 @@
       crossLine = {},
       mainLine = {},
       sectorsCache = {},
+      crossMode = false,
       activeClass = 'sector--current';
 
   publicInterface();
@@ -72,12 +73,18 @@
 
       setActive: function(x, y) {
         var $link = sectorsCache[x + '' + y];
+
+        if (crossMode) {
+          return;
+        }
+
         updateLinks($link);
       },
 
       toggleMode: function(type) {
 
         if (type === 'tiling') {
+          crossMode = true;
           updateLinks();
           $cross.show();
 
@@ -86,7 +93,9 @@
           crossLine.$element.css({height: 5})
           mainLine.$element.css({width: 5});
           // ============================================
+
         } else {
+          crossMode = false;
           $cross.hide();
           updateLinks($activeLink);
         }
