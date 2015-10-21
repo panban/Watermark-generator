@@ -19,7 +19,7 @@
   }
 
   function success(response) {
-    var inputType = $(this).data('upload-type');
+    var inputType = $(this.fileInput).data('upload-type');
 
     my.uploaded(inputType, response);
   }
