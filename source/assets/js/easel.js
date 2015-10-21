@@ -215,12 +215,14 @@
       tiling.gutterLeft = position.left;
       tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft);
       tiling.$containerEl.css('width', tiling.width);
+      tiling.$containerEl.css('left', position.left);
     }
 
     if (position.top != null) {
       tiling.gutterTop = position.top;
       tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop);
       tiling.$containerEl.css('height', tiling.height);
+      tiling.$containerEl.css('top', position.top);
     }
 
     for (i = 0, l = tiling.wms.length; i < l; i++) {
