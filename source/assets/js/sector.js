@@ -18,7 +18,7 @@
 
   function init() {
     $root = $('.sector');
-    $cross = $root.find('.sector_cross')
+    $cross = $root.find('.sector_cross');
     $links = $root.find('a');
     crossLine.$element = $root.find('.sector_cross-line');
     mainLine.$element = $root.find('.sector_main-line');
