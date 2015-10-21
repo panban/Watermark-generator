@@ -1,0 +1,15 @@
+{
+    "name": "cesaradmin/wat-gen.local",
+    "authors": [
+        {
+            "name": "Anton Golomazov",
+            "email": "agolomazov@itloft.ru"
+        }
+    ],
+    "require": {
+        "smottt/wideimage": "dev-master"
+    },
+    "config": {
+        "vendor-dir": "source/phplibs"
+    }
+}
