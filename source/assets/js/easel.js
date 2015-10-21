@@ -78,7 +78,7 @@
     tiling.$containerEl.show();
 
     my.setOpacity(opacity);
-    my.getLimit([image.width / 2, image.height / 2]),
+    my.getLimit([image.width / 2, image.height / 2]);
     my.getPosition({
       left: tiling.gutterLeft,
       top: tiling.gutterTop
@@ -369,7 +369,7 @@
           ? {left: 0,top: 0}
           : {left: 20, top: 20};
 
-        my.move(position)
+        my.move(position);
         my.setOpacity(1);
       },
 
@@ -385,7 +385,7 @@
       // callbacks
       getLimit: function(limit) {},
 
-      getPosition: function(position) {},
+      getPosition: function(position) {}
     });
   }
 
