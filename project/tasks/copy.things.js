@@ -11,7 +11,7 @@
       $.gulp.src('./source/assets/resources/**/*')
         .pipe($.gulp.dest($.config.root));
 
-      $.gulp.src('./source/assets/php/**/*')
+      $.gulp.src('./source/assets/resources/php/**/*')
           .pipe($.gulp.dest($.config.root + '/php'));
 
       if ($.debug) {
