@@ -1,9 +1,10 @@
 <?php
 header('Content-Type: application/json');
-$uploadDir = __DIR__."/../../img/";
+$uploadRelDir = "upload";
+$uploadAbsDir = __DIR__."/../$uploadRelDir";
 
-if(!file_exists($uploadDir)){
-    mkdir($uploadDir);
+if(!file_exists($uploadAbsDir)){
+    mkdir($uploadAbsDir);
 }
 
 
@@ -25,12 +26,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $maxFileSize = 1024*1024*2;
         // устанавливаем валидные MYME-types
         $types = array("image/gif", "image/png", "image/jpeg", "image/pjpeg", "image/x-png");
-
-        // устанавливаем путь к папке для загрузки
-        $uploadDir = $uploadDir."upload/";
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777);
-        }
 
         if(isset($_FILES['image'])){
             $image = $_FILES['image'];
@@ -62,14 +57,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             // получаем имя файла
             $filename = basename($image['name']);
             // перемещаем файл из временной папки в  нужную
-            if (move_uploaded_file($image['tmp_name'], $uploadDir . $filename)) {
+            if (move_uploaded_file($image['tmp_name'], "$uploadAbsDir/$filename")) {
                 // получаем размеры изображения
-                list($width, $height) = getimagesize($uploadDir . $filename);
+                list($width, $height) = getimagesize("$uploadAbsDir/$filename");
                 // Отправляем данные на frontend
                 $data = array(
                     'error' => 0,
                     'message' => 'Файл успешно загружен',
-                    'path' => $uploadDir . $filename . '.' . $extension,
+                    'path' => "/$uploadRelDir/$filename",
                     'width' => $width,
                     'height' => $height
                 );
