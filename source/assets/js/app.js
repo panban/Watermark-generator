@@ -97,7 +97,7 @@
       .siblings()
       .removeClass('switcher_item--active')
       .end()
-      .addClass('switcher_item--active')
+      .addClass('switcher_item--active');
 
     e.preventDefault();
   }

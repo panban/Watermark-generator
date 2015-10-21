@@ -90,7 +90,7 @@
 
           // ============================================
           // TODO
-          crossLine.$element.css({height: 5})
+          crossLine.$element.css({height: 5});
           mainLine.$element.css({width: 5});
           // ============================================
 
