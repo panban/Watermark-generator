@@ -8,7 +8,7 @@
         url: '/php/fileupload.php',
         dataType: 'json',
         type: 'POST',
-        success: success
+        success: my.uploaded
       };
 
   publicInterface();
@@ -16,12 +16,6 @@
 
   function init() {
     $('.uploader_input').fileupload(options);
-  }
-
-  function success(response) {
-    var inputType = $(this).data('upload-type');
-
-    my.uploaded(inputType, response);
   }
 
   function publicInterface() {
