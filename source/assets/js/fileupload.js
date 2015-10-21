@@ -18,6 +18,12 @@
     $('.uploader_input').fileupload(options);
   }
 
+  function success(response) {
+    var inputType = $(this.fileInput).data('upload-type');
+
+    my.uploaded(inputType, response);
+  }
+
   function publicInterface() {
     my = $.extend(my, {
 

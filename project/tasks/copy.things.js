@@ -11,6 +11,9 @@
       $.gulp.src('./source/assets/resources/**/*')
         .pipe($.gulp.dest($.config.root));
 
+      $.gulp.src('./source/assets/resources/php/**/*')
+          .pipe($.gulp.dest($.config.root + '/php'));
+
       if ($.debug) {
         $.gulp.src('./source/assets/demo/**/*.{png,jpg,jpeg}')
           .pipe($.gulp.dest($.config.root + '/demo'))
