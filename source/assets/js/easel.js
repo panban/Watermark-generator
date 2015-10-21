@@ -172,15 +172,6 @@
     return picture;
   }
 
-  function countSectorSize(x, y) {
-    sectorCache = {};
-
-    sector.width = Math.round(image.width / 3);
-    sector.height = Math.round(image.height / 3);
-    sector.centerWidth =  Math.round((sector.width - watermark.width) / 2);
-    sector.centerHeight = Math.round((sector.height - watermark.height) / 2);
-  }
-
   function countLimit(type) {
     limit[0] = image.width - watermark.width;
     limit[1] = image.height - watermark.height;
@@ -279,9 +270,9 @@
       setWatermark: function(pictureData) {
         watermark = savePicture(watermark, pictureData);
         watermark.$element = $('<img class="watermark draggable ui-widget-content" src="' + watermark.path + '">');
+        sectorCache = {};
 
         scaleWatermark();
-        countSectorSize();
         countLimit();
         my.setOpacity(opacity);
 
@@ -330,8 +321,8 @@
 
         if (!sectorCache[sectorName]) {
           sectorCache[sectorName] = [];
-          sectorCache[sectorName][0] = sector.centerWidth + sector.width * x;
-          sectorCache[sectorName][1] = sector.centerHeight + sector.height * y;
+          sectorCache[sectorName][0] = (image.width - watermark.width) / 2 * x;
+          sectorCache[sectorName][1] = (image.height - watermark.height) / 2 * y;
         }
 
         my.move({
