@@ -5,33 +5,23 @@
 
   var my = {},
       options = {
-        url: '/',
+        url: '/php/fileupload.php',
         dataType: 'json',
         type: 'POST',
-        add: add,
-        done: done
+        success: my.uploaded
       };
 
   publicInterface();
   init();
 
   function init() {
-
     $('.uploader_input').fileupload(options);
   }
 
-  function done(e, response) {
-    var parseResponse = JSON.parse(response);
-    var inputType = $(this).data('upload-type');
+  function success(response) {
+    var inputType = $(this.fileInput).data('upload-type');
 
-    my.uploaded(inputType, parseResponse);
-  }
-
-  function add(e) {
-    // TODO: Check uploaded file.
-    // console.log(data.files[0].name);
-    // console.log(data.files[0].size);
-    // console.log(data.files[0].type);
+    my.uploaded(inputType, response);
   }
 
   function publicInterface() {

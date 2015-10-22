@@ -172,15 +172,6 @@
     return picture;
   }
 
-  function countSectorSize(x, y) {
-    sectorCache = {};
-
-    sector.width = Math.round(image.width / 3);
-    sector.height = Math.round(image.height / 3);
-    sector.centerWidth =  Math.round((sector.width - watermark.width) / 2);
-    sector.centerHeight = Math.round((sector.height - watermark.height) / 2);
-  }
-
   function countLimit(type) {
     limit[0] = image.width - watermark.width;
     limit[1] = image.height - watermark.height;
@@ -221,15 +212,24 @@
     var i, l;
 
     if (position.left != null) {
+      var add = parseInt(tiling.$containerEl.css('left')); // запоминаем предыдущую позицию
+      add -= tiling.gutterLeft - position.left; // изменяем на позицию замощение влево или вправо
       tiling.gutterLeft = position.left;
       tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft);
       tiling.$containerEl.css('width', tiling.width);
+      tiling.$containerEl.css('left', add); // установим ему позицию с учетом сдвига внутри
+      // Но возникает проблема в драге. Когда мы так двигаем и если замощение влево вытянуто сильно за край
+      // у нас происходит выход почему-то за границы и соответсвенно будет дергание при драге.
+      // как избавиться пока не знаю. Если уходит вправо то все норм у нас. По верху тоже самое. 
     }
 
     if (position.top != null) {
+      var add = parseInt(tiling.$containerEl.css('top'));
+      add -= tiling.gutterTop - position.top;
       tiling.gutterTop = position.top;
       tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop);
       tiling.$containerEl.css('height', tiling.height);
+      tiling.$containerEl.css('top', add);
     }
 
     for (i = 0, l = tiling.wms.length; i < l; i++) {
@@ -279,9 +279,9 @@
       setWatermark: function(pictureData) {
         watermark = savePicture(watermark, pictureData);
         watermark.$element = $('<img class="watermark draggable ui-widget-content" src="' + watermark.path + '">');
+        sectorCache = {};
 
         scaleWatermark();
-        countSectorSize();
         countLimit();
         my.setOpacity(opacity);
 
@@ -330,8 +330,8 @@
 
         if (!sectorCache[sectorName]) {
           sectorCache[sectorName] = [];
-          sectorCache[sectorName][0] = sector.centerWidth + sector.width * x;
-          sectorCache[sectorName][1] = sector.centerHeight + sector.height * y;
+          sectorCache[sectorName][0] = (image.width - watermark.width) / 2 * x;
+          sectorCache[sectorName][1] = (image.height - watermark.height) / 2 * y;
         }
 
         my.move({
