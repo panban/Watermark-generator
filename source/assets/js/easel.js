@@ -214,9 +214,16 @@
   }
 
   function setGutter(position) {
-    var i, l;
+    var i, l, addLeft, addTop, left, top;
 
     if (position.left != null) {
+
+      left = parseInt(tiling.$containerEl.css('left'));
+      if (left < 0) {
+        addLeft = left + (tiling.countWidth+1)*(tiling.gutterLeft - position.left);
+        tiling.$containerEl.css('left', addLeft);
+      }
+
       tiling.gutterLeft = position.left;
       tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft) + tiling.gutterLeft;
 
@@ -229,6 +236,14 @@
     }
 
     if (position.top != null) {
+
+      top = parseInt(tiling.$containerEl.css('top'));
+      console.log(top);
+      if (top < 0) {
+        addTop = top + (tiling.countHeight+1)*(tiling.gutterTop - position.top);
+        tiling.$containerEl.css('top', addTop);
+      }
+
       tiling.gutterTop = position.top;
       tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop) + tiling.gutterTop;
 
@@ -293,9 +308,6 @@
           left: watermark.left,
           top: watermark.top
         });
-
-
-        createTiling()
       },
 
       setOpacity: function(value) {
