@@ -80,8 +80,8 @@
       },
 
       setCross: function(position) {
-        var height = (position.left * 100) / lineY.limit;
-        var width = (position.top * 100) / lineX.limit;
+        var height = (position.top * 100) / lineY.limit;
+        var width = (position.left * 100) / lineX.limit;
 
         lineY.$element.css('height', height);
         lineX.$element.css('width', width);

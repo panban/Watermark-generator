@@ -60,8 +60,8 @@
         limitWidth = image.width - tiling.width,
         limitHeight = image.height - tiling.height;
 
-    if(x > tiling.gutterLeft) x = tiling.gutterLeft;
-    if(y > tiling.gutterTop)  y = tiling.gutterTop;
+    if(x > 0) x = 0;
+    if(y > 0)  y = 0;
     if(x < limitWidth)        x = limitWidth;
     if(y < limitHeight)       y = limitHeight;
 
@@ -178,32 +178,37 @@
   }
 
   function createTiling() {
-    var i, l;
-    var $clone = null;
+    var $watermarkClone,
+        watermarkHTML,
+        tpl = '',
+        i, l;
 
-    tiling.wms = [];
     tiling.countWidth = Math.round(image.width / watermark.width);
     tiling.countHeight = Math.round(image.height / watermark.height);
-    tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft);
-    tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop);
+    tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft) + tiling.gutterLeft;
+    tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop) + tiling.gutterTop;
+
+    $watermarkClone = watermark.$element.clone().css({
+      float: 'left',
+      marginRight: tiling.gutterLeft,
+      marginBottom: tiling.gutterTop
+    });
+
+    watermarkHTML = $watermarkClone[0].outerHTML;
 
     for (i = 0, l = tiling.countHeight * tiling.countWidth; i < l; i++) {
-
-      $clone = watermark.$element.clone();
-      $clone.css({
-        'float': 'left',
-        'margin-right': tiling.gutterLeft,
-        'margin-bottom': tiling.gutterTop
-      });
-
-      tiling.$containerEl.append($clone);
-      tiling.wms.push($clone);
+      tpl += watermarkHTML;
     }
 
     tiling.$containerEl.css({
-      width: tiling.width,
-      height: tiling.height
+      width: tiling.width ,
+      height: tiling.height,
+      paddingTop: tiling.gutterTop,
+      paddingLeft: tiling.gutterLeft
     });
+
+    tiling.$containerEl[0].innerHTML = tpl;
+    tiling.items = tiling.$containerEl.children();
 
     delete tiling.uncreated;
   }
@@ -213,21 +218,26 @@
 
     if (position.left != null) {
       tiling.gutterLeft = position.left;
-      tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft);
-      tiling.$containerEl.css('width', tiling.width);
+      tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft) + tiling.gutterLeft;
+
+      tiling.$containerEl.css({
+        width: tiling.width,
+        paddingLeft: tiling.gutterLeft
+      });
+
+      tiling.items.css('marginRight', tiling.gutterLeft);
     }
 
     if (position.top != null) {
       tiling.gutterTop = position.top;
-      tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop);
-      tiling.$containerEl.css('height', tiling.height);
-    }
+      tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop) + tiling.gutterTop;
 
-    for (i = 0, l = tiling.wms.length; i < l; i++) {
-      tiling.wms[i].css({
-        marginRight: tiling.gutterLeft,
-        marginBottom: tiling.gutterTop
+      tiling.$containerEl.css({
+        height: tiling.height,
+        paddingTop: tiling.gutterTop
       });
+
+      tiling.items.css('marginBottom', tiling.gutterTop);
     }
   }
 
@@ -269,7 +279,7 @@
 
       setWatermark: function(pictureData) {
         watermark = savePicture(watermark, pictureData);
-        watermark.$element = $('<img class="watermark draggable ui-widget-content" src="' + watermark.path + '">');
+        watermark.$element = $('<img class="watermark" src="' + watermark.path + '">');
         sectorCache = {};
 
         scaleWatermark();
@@ -283,6 +293,9 @@
           left: watermark.left,
           top: watermark.top
         });
+
+
+        createTiling()
       },
 
       setOpacity: function(value) {
