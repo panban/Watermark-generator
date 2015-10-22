@@ -84,6 +84,14 @@
         options.eps = eps;
       },
 
+      setValue: function(percent) {
+        var x = (rangeWidth * percent) / 100;
+
+        countValue(x);
+        moveHangle(x);
+      },
+
+      // callbacks.
       change: function() {}
     });
   }

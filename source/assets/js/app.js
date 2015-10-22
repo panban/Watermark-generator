@@ -45,6 +45,7 @@
   function reset() {
     easel.reset();
     sector.setActive(0, 0);
+    range.setValue(0);
   }
 
   function initSpinners() {
