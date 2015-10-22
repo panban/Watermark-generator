@@ -219,8 +219,9 @@
     if (position.left != null) {
 
       left = parseInt(tiling.$containerEl.css('left'));
+
       if (left < 0) {
-        addLeft = left + (tiling.countWidth+1)*(tiling.gutterLeft - position.left);
+        addLeft = left + (tiling.countWidth + 1) * (tiling.gutterLeft - position.left);
         tiling.$containerEl.css('left', addLeft);
       }
 
@@ -238,9 +239,9 @@
     if (position.top != null) {
 
       top = parseInt(tiling.$containerEl.css('top'));
-      console.log(top);
+
       if (top < 0) {
-        addTop = top + (tiling.countHeight+1)*(tiling.gutterTop - position.top);
+        addTop = top + (tiling.countHeight + 1) * (tiling.gutterTop - position.top);
         tiling.$containerEl.css('top', addTop);
       }
 
