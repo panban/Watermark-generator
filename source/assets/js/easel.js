@@ -78,7 +78,7 @@
     tiling.$containerEl.show();
 
     my.setOpacity(opacity);
-    my.getLimit([image.width / 2, image.height / 2]);
+    my.getLimit([100, 100]);
     my.getPosition({
       left: tiling.gutterLeft,
       top: tiling.gutterTop
@@ -212,24 +212,15 @@
     var i, l;
 
     if (position.left != null) {
-      var add = parseInt(tiling.$containerEl.css('left')); // запоминаем предыдущую позицию
-      add -= tiling.gutterLeft - position.left; // изменяем на позицию замощение влево или вправо
       tiling.gutterLeft = position.left;
       tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft);
       tiling.$containerEl.css('width', tiling.width);
-      tiling.$containerEl.css('left', add); // установим ему позицию с учетом сдвига внутри
-      // Но возникает проблема в драге. Когда мы так двигаем и если замощение влево вытянуто сильно за край
-      // у нас происходит выход почему-то за границы и соответсвенно будет дергание при драге.
-      // как избавиться пока не знаю. Если уходит вправо то все норм у нас. По верху тоже самое. 
     }
 
     if (position.top != null) {
-      var add = parseInt(tiling.$containerEl.css('top'));
-      add -= tiling.gutterTop - position.top;
       tiling.gutterTop = position.top;
       tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop);
       tiling.$containerEl.css('height', tiling.height);
-      tiling.$containerEl.css('top', add);
     }
 
     for (i = 0, l = tiling.wms.length; i < l; i++) {

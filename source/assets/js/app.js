@@ -105,11 +105,13 @@
   function applyLimit(limit) {
     $spinnerX.spinner('option', 'max', limit[0]);
     $spinnerY.spinner('option', 'max', limit[1]);
+    sector.setLimit(limit);
   }
 
   function applyPosition(position) {
     $spinnerX.spinner('value', position.left);
     $spinnerY.spinner('value', position.top);
+    sector.setCross(position);
   }
 
   function download() {

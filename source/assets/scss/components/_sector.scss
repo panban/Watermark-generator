@@ -6,8 +6,8 @@
   width: ($partSize * 3) * 1px;
   padding: 1px 0 0 1px;
 
-  &_main-line,
-  &_cross-line {
+  &_line-x,
+  &_line-y {
     position: absolute;
     top: 0;
     left: 0;
@@ -16,13 +16,13 @@
     background: #f97e76;
   }
 
-  &_main-line {
+  &_line-x {
     width: 0;
     max-width: 100%;
     margin: auto;
   }
 
-  &_cross-line {
+  &_line-y {
     height: 0;
     max-height: 100%;
     margin: auto;
