@@ -30,9 +30,9 @@
     $('.js-switcher').on('click', 'a', toggleMode);
   }
 
-  function uploaded(response) {
+  function uploaded(inputType, response) {
 
-    if (response.type === 'image') {
+    if (inputType === 'image') {
       easel.setImage(response);
     } else {
       easel.setWatermark(response);
