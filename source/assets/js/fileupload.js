@@ -8,7 +8,7 @@
         url: '/php/fileupload.php',
         dataType: 'json',
         type: 'POST',
-        success: my.uploaded
+        success: success
       };
 
   publicInterface();
