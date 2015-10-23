@@ -63,19 +63,15 @@
         limitHeight = image.height - tiling.height;
 
     if(x > 0) x = 0;
-    if(y > 0)  y = 0;
-    if(x < limitWidth)        x = limitWidth;
-    if(y < limitHeight)       y = limitHeight;
+    if(y > 0) y = 0;
+    if(x < limitWidth) x = limitWidth;
+    if(y < limitHeight) y = limitHeight;
 
     tiling.left = ui.position.left = x;
     tiling.top = ui.position.top = y;
   }
 
   function onTilingMode() {
-    if (!tiling.items) {
-      return;
-    }
-
     if (tiling.uncreated) {
       createTiling();
     }
@@ -94,6 +90,10 @@
   }
 
   function onSingleMode() {
+    if (!tiling.items) {
+      return;
+    }
+    
     if (!tiling.uncreated) {
       tiling.$containerEl.hide();
     }
