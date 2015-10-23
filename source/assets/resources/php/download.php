@@ -1,5 +1,6 @@
 <?php
-
+require_once __DIR__.'/../../phplibs/autoload.php';
+use \WideImage\WideImage;
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     $file = $_POST['imagePath'];
@@ -19,8 +20,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         exit;
     }
 
-    require_once __DIR__.'/../../phplibs/autoload.php';
-    use WideImage\WideImage;
+    
 
     $image = WideImage::loadFromFile($file);
     $watermark = WideImage::loadFromFile($watermarkPath);
