@@ -378,7 +378,7 @@
 
         settings = {
           imagePath: image.path,
-          watermarkPaht: watermark.path,
+          watermarkPath: watermark.path,
           watermarkScale: watermark.scale,
           opacity: opacity,
           position: position
