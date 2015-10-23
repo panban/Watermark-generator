@@ -119,7 +119,7 @@
     var JSONSettings = JSON.stringify(easel.getSettings());
 
     $.ajax({
-      url: '/',
+      url: '/php/download.php',
       type: 'POST',
       data: JSONSettings
     });
