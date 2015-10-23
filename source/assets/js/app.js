@@ -19,7 +19,7 @@
 
     //==========================================
     // For test.
-    demo.apply();
+    //demo.apply();
     //==========================================
   }
 
@@ -45,6 +45,7 @@
   function reset() {
     easel.reset();
     sector.setActive(0, 0);
+    range.setValue(0);
   }
 
   function initSpinners() {
@@ -105,18 +106,20 @@
   function applyLimit(limit) {
     $spinnerX.spinner('option', 'max', limit[0]);
     $spinnerY.spinner('option', 'max', limit[1]);
+    sector.setLimit(limit);
   }
 
   function applyPosition(position) {
     $spinnerX.spinner('value', position.left);
     $spinnerY.spinner('value', position.top);
+    sector.setCross(position);
   }
 
   function download() {
     var JSONSettings = JSON.stringify(easel.getSettings());
 
     $.ajax({
-      url: '/',
+      url: '/php/download.php',
       type: 'POST',
       data: JSONSettings
     });

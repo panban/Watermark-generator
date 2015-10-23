@@ -60,8 +60,8 @@
         limitWidth = image.width - tiling.width,
         limitHeight = image.height - tiling.height;
 
-    if(x > tiling.gutterLeft) x = tiling.gutterLeft;
-    if(y > tiling.gutterTop)  y = tiling.gutterTop;
+    if(x > 0) x = 0;
+    if(y > 0)  y = 0;
     if(x < limitWidth)        x = limitWidth;
     if(y < limitHeight)       y = limitHeight;
 
@@ -78,7 +78,7 @@
     tiling.$containerEl.show();
 
     my.setOpacity(opacity);
-    my.getLimit([image.width / 2, image.height / 2]);
+    my.getLimit([100, 100]);
     my.getPosition({
       left: tiling.gutterLeft,
       top: tiling.gutterTop
@@ -178,65 +178,82 @@
   }
 
   function createTiling() {
-    var i, l;
-    var $clone = null;
+    var $watermarkClone,
+        watermarkHTML,
+        tpl = '',
+        i, l;
 
-    tiling.wms = [];
     tiling.countWidth = Math.round(image.width / watermark.width);
     tiling.countHeight = Math.round(image.height / watermark.height);
-    tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft);
-    tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop);
+    tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft) + tiling.gutterLeft;
+    tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop) + tiling.gutterTop;
+
+    $watermarkClone = watermark.$element.clone().css({
+      float: 'left',
+      marginRight: tiling.gutterLeft,
+      marginBottom: tiling.gutterTop
+    });
+
+    watermarkHTML = $watermarkClone[0].outerHTML;
 
     for (i = 0, l = tiling.countHeight * tiling.countWidth; i < l; i++) {
-
-      $clone = watermark.$element.clone();
-      $clone.css({
-        'float': 'left',
-        'margin-right': tiling.gutterLeft,
-        'margin-bottom': tiling.gutterTop
-      });
-
-      tiling.$containerEl.append($clone);
-      tiling.wms.push($clone);
+      tpl += watermarkHTML;
     }
 
     tiling.$containerEl.css({
-      width: tiling.width,
-      height: tiling.height
+      width: tiling.width ,
+      height: tiling.height,
+      paddingTop: tiling.gutterTop,
+      paddingLeft: tiling.gutterLeft
     });
+
+    tiling.$containerEl[0].innerHTML = tpl;
+    tiling.items = tiling.$containerEl.children();
 
     delete tiling.uncreated;
   }
 
   function setGutter(position) {
-    var i, l;
+    var i, l, addLeft, addTop, left, top;
 
     if (position.left != null) {
-      var add = parseInt(tiling.$containerEl.css('left')); // запоминаем предыдущую позицию
-      add -= tiling.gutterLeft - position.left; // изменяем на позицию замощение влево или вправо
+
+      left = parseInt(tiling.$containerEl.css('left'));
+
+      if (left < 0) {
+        addLeft = left + (tiling.countWidth + 1) * (tiling.gutterLeft - position.left);
+        tiling.$containerEl.css('left', addLeft);
+      }
+
       tiling.gutterLeft = position.left;
-      tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft);
-      tiling.$containerEl.css('width', tiling.width);
-      tiling.$containerEl.css('left', add); // установим ему позицию с учетом сдвига внутри
-      // Но возникает проблема в драге. Когда мы так двигаем и если замощение влево вытянуто сильно за край
-      // у нас происходит выход почему-то за границы и соответсвенно будет дергание при драге.
-      // как избавиться пока не знаю. Если уходит вправо то все норм у нас. По верху тоже самое. 
+      tiling.width = tiling.countWidth * (watermark.width + tiling.gutterLeft) + tiling.gutterLeft;
+
+      tiling.$containerEl.css({
+        width: tiling.width,
+        paddingLeft: tiling.gutterLeft
+      });
+
+      tiling.items.css('marginRight', tiling.gutterLeft);
     }
 
     if (position.top != null) {
-      var add = parseInt(tiling.$containerEl.css('top'));
-      add -= tiling.gutterTop - position.top;
-      tiling.gutterTop = position.top;
-      tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop);
-      tiling.$containerEl.css('height', tiling.height);
-      tiling.$containerEl.css('top', add);
-    }
 
-    for (i = 0, l = tiling.wms.length; i < l; i++) {
-      tiling.wms[i].css({
-        marginRight: tiling.gutterLeft,
-        marginBottom: tiling.gutterTop
+      top = parseInt(tiling.$containerEl.css('top'));
+
+      if (top < 0) {
+        addTop = top + (tiling.countHeight + 1) * (tiling.gutterTop - position.top);
+        tiling.$containerEl.css('top', addTop);
+      }
+
+      tiling.gutterTop = position.top;
+      tiling.height = tiling.countHeight * (watermark.height + tiling.gutterTop) + tiling.gutterTop;
+
+      tiling.$containerEl.css({
+        height: tiling.height,
+        paddingTop: tiling.gutterTop
       });
+
+      tiling.items.css('marginBottom', tiling.gutterTop);
     }
   }
 
@@ -278,7 +295,7 @@
 
       setWatermark: function(pictureData) {
         watermark = savePicture(watermark, pictureData);
-        watermark.$element = $('<img class="watermark draggable ui-widget-content" src="' + watermark.path + '">');
+        watermark.$element = $('<img class="watermark" src="' + watermark.path + '">');
         sectorCache = {};
 
         scaleWatermark();

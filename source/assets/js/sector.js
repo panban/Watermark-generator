@@ -6,8 +6,8 @@
       $links = null,
       $cross = null,
       $activeLink = null,
-      crossLine = {},
-      mainLine = {},
+      lineX = {},
+      lineY = {},
       sectorsCache = {},
       crossMode = false,
       activeClass = 'sector--current';
@@ -20,14 +20,13 @@
     $root = $('.sector');
     $cross = $root.find('.sector_cross');
     $links = $root.find('a');
-    crossLine.$element = $root.find('.sector_cross-line');
-    mainLine.$element = $root.find('.sector_main-line');
+    lineX.$element = $root.find('.sector_line-x');
+    lineY.$element = $root.find('.sector_line-y');
 
     saveSectors();
   }
 
   function attachEvents() {
-
     $root.on('click', 'a', onClick);
   }
 
@@ -48,7 +47,6 @@
   }
 
   function saveSectors() {
-
     $links.each(function(i, link) {
       var $link = $(link);
       var y = $link.data('step-y');
@@ -81,18 +79,25 @@
         updateLinks($link);
       },
 
+      setCross: function(position) {
+        var height = (position.top * 100) / lineY.limit;
+        var width = (position.left * 100) / lineX.limit;
+
+        lineY.$element.css('height', height);
+        lineX.$element.css('width', width);
+      },
+
+      setLimit: function(limit) {
+        lineX.limit = limit[0];
+        lineY.limit = limit[1];
+      },
+
       toggleMode: function(type) {
 
         if (type === 'tiling') {
           crossMode = true;
           updateLinks();
           $cross.show();
-
-          // ============================================
-          // TODO
-          crossLine.$element.css({height: 5});
-          mainLine.$element.css({width: 5});
-          // ============================================
 
         } else {
           crossMode = false;
