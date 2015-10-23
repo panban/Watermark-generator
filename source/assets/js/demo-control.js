@@ -58,8 +58,6 @@
     buttonImageEl.on('click', function() {
       flag = true;
       easel.setImage(getImage());
-      easel.moveBySector(0, 0);
-      sector.setActive(0, 0);
     });
 
     buttonWmEl.on('click', function() {

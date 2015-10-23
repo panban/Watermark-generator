@@ -19,7 +19,7 @@
 
     //==========================================
     // For test.
-    //demo.apply();
+    // demo.apply();
     //==========================================
   }
 
@@ -36,10 +36,10 @@
       easel.setImage(response);
     } else {
       easel.setWatermark(response);
+      easel.moveBySector(0, 0);
+      sector.setActive(0, 0)
     }
 
-    easel.moveBySector(0, 0);
-    sector.setActive(0, 0)
   }
 
   function reset() {
