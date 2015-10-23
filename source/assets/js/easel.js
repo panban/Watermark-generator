@@ -7,7 +7,9 @@
       tiling = {
         uncreated: true,
         gutterLeft: 20,
-        gutterTop: 20
+        gutterTop: 20,
+        left: 0,
+        top: 0
       },
       opacity = 1,
       sector = {},
@@ -70,6 +72,10 @@
   }
 
   function onTilingMode() {
+    if (!tiling.items) {
+      return;
+    }
+
     if (tiling.uncreated) {
       createTiling();
     }
