@@ -64,12 +64,14 @@
       upd.image = true;
     } else {
       if (!flag) return;
+      upd.watermark = true;
 
       easel.setWatermark(getWatermark());
-      easel.moveBySector([0, 0]);
-      sector.setActive(0, 0);
-      upd.watermark = true;
+
+      // easel.moveBySector([0, 0]);
+      // sector.setActive([0, 0]);
     }
+
 
     if (upd.image) {
       blocker.enable($('.locked-block').first());
@@ -92,7 +94,7 @@
         easel.setImage(demoData['1500x1500']);
         easel.setWatermark(demoData['256x256']);
         easel.moveBySector([0, 0]);
-        sector.setActive(0, 0);
+        sector.setActive([0, 0]);
       }
     });
   }

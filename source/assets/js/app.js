@@ -46,8 +46,11 @@
       upd.watemark = true;
 
       easel.setWatermark(response);
+    }
+
+    if (mode === SINGLE_MODE) {
       easel.moveBySector([0, 0]);
-      sector.setActive(0, 0)
+      sector.setActive([0, 0])
     }
 
     if (upd.image) {
@@ -61,7 +64,7 @@
 
   function reset() {
     easel.reset();
-    sector.setActive(0, 0);
+    sector.setActive([0, 0]);
     range.setValue(0);
   }
 

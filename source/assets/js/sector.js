@@ -69,8 +69,8 @@
   function publicInterface() {
     my = $.extend(my, {
 
-      setActive: function(x, y) {
-        var $link = sectorsCache[x + '' + y];
+      setActive: function(position) {
+        var $link = sectorsCache[position.join('')];
 
         if (crossMode) {
           return;
@@ -93,7 +93,6 @@
       },
 
       toggleMode: function(mode) {
-
         if (mode === 'TILING_MODE') {
           crossMode = true;
           updateLinks();

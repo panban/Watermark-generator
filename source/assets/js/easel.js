@@ -199,6 +199,29 @@
     }
   }
 
+  function _setWatermark() {
+    var isSingle = (mode === SINGLE_MODE);
+    var limit = isSingle ? watermark.limit : [100, 100];
+    var coords = isSingle ? watermark.coords : tiling.gutter;
+
+    toggleContext();
+
+    if (isSingle) {
+      containers.$watermark.html(watermark.$element).css({
+        padding: 0,
+        width: watermark.size[0],
+        height: watermark.size[1]
+      });
+    } else {
+      createTiling();
+    }
+
+    my.move(context.coords);
+    my.setOpacity(opacity);
+    my.getLimit(limit);
+    my.getCoords(coords);
+  }
+
   function publicInterface() {
     my = $.extend(my, {
 
@@ -228,13 +251,7 @@
         scaleWatermark();
         countLimit();
 
-        containers.$watermark.append(watermark.$element);
-
-        toggleContext()
-
-        my.setOpacity(opacity);
-        my.getLimit(watermark.limit);
-        my.getCoords(watermark.coords);
+        _setWatermark();
       },
 
       setOpacity: function(value) {
@@ -330,29 +347,7 @@
         }
 
         mode = newMode;
-        toggleContext();
-
-        var coords = (mode === SINGLE_MODE)
-          ? watermark.coords
-          : tiling.gutter;
-
-        var limit = (mode === SINGLE_MODE)
-          ? watermark.limit
-          : [100, 100];
-
-        if (mode === SINGLE_MODE) {
-          containers.$watermark.html(watermark.$element).css({
-            padding: 0,
-            width: watermark.size[0],
-            height: watermark.size[1]
-          });
-        } else {
-          createTiling();
-        }
-
-        my.move(context.coords);
-        my.getLimit(limit);
-        my.getCoords(coords);
+        _setWatermark();
       },
 
       // callbacks
