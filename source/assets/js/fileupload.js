@@ -8,7 +8,7 @@
         url: '/php/fileupload.php',
         dataType: 'json',
         type: 'POST',
-        add: add,
+        done: done,
         success: success
       };
 
@@ -19,11 +19,11 @@
     $('.uploader_input').fileupload(options);
   }
 
-  function add(e, data) {
-    var parent = $(this).closest('.uploader'),
-        field = parent.find('.uploader_field');
-
-    field.text(data.files[0].name);
+  function done(e, context) {
+    $(this)
+        .closest('.uploader')
+        .find('.uploader_field')
+        .text(context.files[0].name);
   }
 
   function success(response) {
