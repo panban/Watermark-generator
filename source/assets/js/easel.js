@@ -117,13 +117,13 @@
     picture = $.extend({}, data);
     picture.originalSize = [picture.width, picture.height];
     picture.size = [picture.width, picture.height];
-    picture.coords = [];
+    picture.coords = [0, 0];
 
     return picture;
   }
 
   function createTiling() {
-    var watermarkTpl= '',
+    var watermarkTpl = '',
         tilingTpl = '',
         i, l;
 
@@ -277,7 +277,7 @@
           margin: ['marginRight', 'marginBottom'],
           size: ['width', 'height'],
           padding: ['paddingLeft', 'paddingTop']
-        }
+        };
 
         each(gutters, function(i, gutter) {
           var edge = parseInt(containers.$watermark.css(props.duration[i]));

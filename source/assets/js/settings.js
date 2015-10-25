@@ -48,17 +48,17 @@
       easel.setWatermark(response);
     }
 
-    if (mode === SINGLE_MODE) {
-      easel.moveBySector([0, 0]);
-      sector.setActive([0, 0])
-    }
-
     if (upd.image) {
       blocker.enable($('.locked-block').first());
     }
 
     if (upd.watemark) {
       blocker.enable($('.locked-block'));
+
+      if (mode === SINGLE_MODE) {
+        easel.moveBySector([0, 0]);
+        sector.setActive([0, 0])
+      }
     }
   }
 
