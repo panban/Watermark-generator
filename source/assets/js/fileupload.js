@@ -1,5 +1,3 @@
-// custom dependencies: easel, range, sector;
-
 (function(window, $) {
   'use strict';
 

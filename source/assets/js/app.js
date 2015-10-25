@@ -148,10 +148,13 @@
   function download() {
     var JSONSettings = JSON.stringify(easel.getSettings());
 
+    console.warn('[Data for building]');
+    console.dir(easel.getSettings());
+
     $.ajax({
       url: '/php/download.php',
       type: 'POST',
-      data: JSONSettings
+      data: 'JSONSettings=' + JSONSettings
     });
   }
 

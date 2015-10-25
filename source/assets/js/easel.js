@@ -80,7 +80,6 @@
   }
 
   function scaleWatermark() {
-
     if (image.scale !== 1) {
       watermark.size[0] = Math.round(watermark.size[0] / image.scale);
       watermark.size[1] = Math.round(watermark.size[1] / image.scale);
@@ -90,8 +89,6 @@
   }
 
   function setCoords(coords) {
-    var axis;
-
     each(coords, function(i, position) {
       context.coords[i] = limitFn(position, context.limit[i]);
     });
@@ -189,16 +186,16 @@
     limitFn = resolve ? singleLimit : tilingLimit;
   }
 
-  function each(coords, fn) {
+  function each(array, fn) {
     var i, l;
 
-    for (i = 0, l = coords.length; i < l; i++) {
+    for (i = 0, l = array.length; i < l; i++) {
 
-      if (coords[i] == null) {
+      if (array[i] == null) {
         continue;
       }
 
-      fn(i, coords[i]);
+      fn(i, array[i]);
     }
   }
 
@@ -287,24 +284,22 @@
       },
 
       moveBySector: function(position) {
-        var name = position.join('');
+        var xy = position.join('');
 
-        if (!sectorCache[name]) {
-          sectorCache[name] = [];
-          sectorCache[name][0] = (image.size[0] - watermark.size[0]) / 2 * position[0];
-          sectorCache[name][1] = (image.size[1] - watermark.size[1]) / 2 * position[1];
+        if (!sectorCache[xy]) {
+          sectorCache[xy] = [];
+          sectorCache[xy][0] = (image.size[0] - watermark.size[0]) / 2 * position[0];
+          sectorCache[xy][1] = (image.size[1] - watermark.size[1]) / 2 * position[1];
         }
 
-        my.move([sectorCache[name][0], sectorCache[name][1]]);
+        my.move([sectorCache[xy][0], sectorCache[xy][1]]);
       },
 
       getSettings: function() {
-        var position = [[]],
+        var position = [context.coords],
             settings = {};
 
-        if (mode === SINGLE_MODE) {
-          position[0] = watermark.coords;
-        } else {
+        if (mode === TILING_MODE) {
           position.push(tiling.gutter);
         }
 
