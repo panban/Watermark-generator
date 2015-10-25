@@ -1,0 +1,13 @@
+.disable {
+  position: relative;
+  opacity: 0.5;
+
+  &-block {
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

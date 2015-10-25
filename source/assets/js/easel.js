@@ -140,13 +140,12 @@
     ].join('');
 
 
-    tiling.count[0] = Math.round(image.size[0] / watermark.size[0]);
-    tiling.count[1] = Math.round(image.size[1] / watermark.size[1]);
+    tiling.count[0] = Math.round(image.size[0] / watermark.size[0]) + 1;
+    tiling.count[1] = Math.round(image.size[1] / watermark.size[1]) + 1;
 
     tiling.size[0] = tiling.count[0] * (watermark.size[0] + tiling.gutter[0]) + tiling.gutter[0];
     tiling.size[1] = tiling.count[1] * (watermark.size[1] + tiling.gutter[1]) + tiling.gutter[1];
     tiling.limit = [image.size[0] - tiling.size[0], image.size[1] - tiling.size[1]];
-
 
     for (i = 0, l = tiling.count[1] * tiling.count[0]; i < l; i++) {
       tilingTpl += watermarkTpl;
@@ -160,7 +159,7 @@
     });
 
     containers.$watermark[0].innerHTML = tilingTpl;
-    tiling.items = containers.$watermark.children();
+    tiling.$items = containers.$watermark.children();
   }
 
   function singleLimit(value, limit) {
@@ -280,7 +279,7 @@
 
           containers.$watermark.css(props.size[i], tiling.size[i]);
           containers.$watermark.css(props.padding[i], tiling.gutter[i]);
-          tiling.items.css(props.margin[i], tiling.gutter[i]);
+          tiling.$items.css(props.margin[i], tiling.gutter[i]);
         });
 
         tiling.limit = [image.size[0] - tiling.size[0], image.size[1] - tiling.size[1]];

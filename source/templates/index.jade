@@ -29,43 +29,29 @@ html
                             .uploader_field Изображение отсутствует
                             a.uploader_button
                             input.uploader_input(type="file" data-upload-type="watermark" name="watermark")
-                .control_block.locked-block
-                    .control_header
-                        .switcher.js-switcher
-                            a.switcher_item.icon_switch-single.switcher_item--active(data-mode="single" href="")
-                            a.switcher_item.icon_switch-mode(data-mode="tiling" href="")
-                        .control_block-title Положение
-                    .position
-                        .position_block
-
-                            .sector.sector--cross
-                                a.sector--current(href="" data-step-x="0" data-step-y="0")
-                                a(href="" data-step-x="1" data-step-y="0")
-                                a(href="" data-step-x="2" data-step-y="0")
-                                a(href="" data-step-x="0" data-step-y="1")
-                                a(href="" data-step-x="1" data-step-y="1")
-                                a(href="" data-step-x="2" data-step-y="1")
-                                a(href="" data-step-x="0" data-step-y="2")
-                                a(href="" data-step-x="1" data-step-y="2")
-                                a(href="" data-step-x="2" data-step-y="2")
-                                .sector_cross
-                                    .sector_line-x
-                                    .sector_line-y
-
-                        .position_block
-                            .position_spinner
-                                .spinner
-                                    .spinner_axis X
-                                    input.spinner_input.js-spinner-x
-
-                            .position_spinner
-                                .spinner
-                                    .spinner_axis Y
-                                    input.spinner_input.js-spinner-y 
-
-                .control_block.locked-block
-                    .control_block-title Прозрачность
-                    include _range
+                .control_block
+                    .control_container.locked-block
+                        .control_header
+                            .switcher.js-switcher
+                                a.switcher_item.icon_switch-single.switcher_item--active(data-mode="single" href="")
+                                a.switcher_item.icon_switch-mode(data-mode="tiling" href="")
+                            .control_block-title Положение
+                        .position
+                            .position_block
+                                include _sector
+                            .position_block
+                                .position_spinner
+                                    .spinner
+                                        .spinner_axis X
+                                        input.spinner_input.js-spinner-x
+                                .position_spinner
+                                    .spinner
+                                        .spinner_axis Y
+                                        input.spinner_input.js-spinner-y 
+                .control_block
+                    .control_container.locked-block
+                        .control_block-title Прозрачность
+                        include _range
                 .control_button-group.locked-block
                     button.control_button-reset.js-reset Сброс
                     button.control_button-download.js-download Скачать
