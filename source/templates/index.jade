@@ -23,13 +23,13 @@ html
                         .uploader_field Изображение отсутствует
                         a.uploader_button
                         input.uploader_input(type="file" data-upload-type="image" name="image")
-
-                    .uploader-label Водяной знак
-                    label.uploader
-                        .uploader_field Изображение отсутствует
-                        a.uploader_button
-                        input.uploader_input(type="file" data-upload-type="watermark" name="watermark")
-                .control_block
+                    .locked-block
+                        .uploader-label Водяной знак
+                        label.uploader
+                            .uploader_field Изображение отсутствует
+                            a.uploader_button
+                            input.uploader_input(type="file" data-upload-type="watermark" name="watermark")
+                .control_block.locked-block
                     .control_header
                         .switcher.js-switcher
                             a.switcher_item.icon_switch-single.switcher_item--active(data-mode="single" href="")
@@ -63,10 +63,10 @@ html
                                     .spinner_axis Y
                                     input.spinner_input.js-spinner-y 
 
-                .control_block
+                .control_block.locked-block
                     .control_block-title Прозрачность
                     include _range
-                .control_button-group
+                .control_button-group.locked-block
                     button.control_button-reset.js-reset Сброс
                     button.control_button-download.js-download Скачать
 
