@@ -64,20 +64,14 @@
 }
 
 .image-container,
-.watermark-container,
-.tiling-container {
+.watermark-container{
   overflow: hidden;
   position: absolute;
   top: 0;
   left: 0;
 }
 
-.watermark-image {
-  width: inherit;
-}
-
-.tiling-container,
-.watermark {
+.watermark-container {
   z-index: 100;
   cursor: move
 }

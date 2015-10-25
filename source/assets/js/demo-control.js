@@ -66,7 +66,7 @@
       }
 
       easel.setWatermark(getWatermark());
-      easel.moveBySector(0, 0);
+      easel.moveBySector([0, 0]);
       sector.setActive(0, 0);
     });
   }
@@ -77,7 +77,7 @@
       apply: function() {
         easel.setImage(demoData['1500x1500']);
         easel.setWatermark(demoData['256x256']);
-        easel.moveBySector(0, 0);
+        easel.moveBySector([0, 0]);
         sector.setActive(0, 0);
       }
     });

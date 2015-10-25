@@ -3,19 +3,24 @@
 
   var my = {},
       $spinnerX = null,
-      $spinnerY = null;
+      $spinnerY = null,
+      SINGLE_MODE = 'SINGLE_MODE',
+      TILING_MODE = 'TILING_MODE',
+      mode;
 
   init();
   attachEvents();
 
   function init() {
+    mode = SINGLE_MODE;
+
     initSpinners();
 
     range.change = easel.setOpacity;
     sector.triger = easel.moveBySector;
     fileupload.uploaded = uploaded;
     easel.getLimit = applyLimit;
-    easel.getPosition = applyPosition;
+    easel.getCoords = applyCoords;
 
     //==========================================
     // For test.
@@ -39,7 +44,6 @@
       easel.moveBySector(0, 0);
       sector.setActive(0, 0)
     }
-
   }
 
   function reset() {
@@ -52,34 +56,42 @@
     var optionsH = {
       min: 0,
 
-      create: function(event, ui) {
+      /*create: function(event, ui) {
         $(this).on('keyup', function() {
           var value = $spinnerX.spinner('value');
 
           $spinnerX.spinner('value', value);
-          easel.move({left: value});
+          easel.move({x: value});
         });
-      },
+      },*/
 
       spin: function(event, ui) {
-        easel.move({left: ui.value});
+        if (mode === SINGLE_MODE) {
+          easel.move([ui.value, null]);
+        } else {
+          easel.setGutter([ui.value, null])
+        }
       }
     };
 
     var optionsV = {
       min:0,
 
-      create: function(event, ui) {
+      /*create: function(event, ui) {
         $(this).on('keyup', function() {
           var value = $spinnerY.spinner('value');
 
           $spinnerY.spinner('value', value);
-          easel.move({top: value});
+          easel.move({y: value});
         });
-      },
+      },*/
 
       spin: function(event, ui) {
-        easel.move({top: ui.value});
+        if (mode === SINGLE_MODE) {
+          easel.move([null, ui.value]);
+        } else {
+          easel.setGutter([null, ui.value])
+        }
       }
     };
 
@@ -89,7 +101,10 @@
 
   function toggleMode(e) {
     var $this = $(this),
-        mode = $this.data('mode');
+        modePeer = $this.data('mode');
+    e.preventDefault();
+
+    mode = (modePeer === 'single') ? SINGLE_MODE : TILING_MODE;
 
     easel.toggleMode(mode);
     sector.toggleMode(mode);
@@ -100,7 +115,6 @@
       .end()
       .addClass('switcher_item--active');
 
-    e.preventDefault();
   }
 
   function applyLimit(limit) {
@@ -109,10 +123,13 @@
     sector.setLimit(limit);
   }
 
-  function applyPosition(position) {
-    $spinnerX.spinner('value', position.left);
-    $spinnerY.spinner('value', position.top);
-    sector.setCross(position);
+  function applyCoords(coords) {
+    $spinnerX.spinner('value', coords[0]);
+    $spinnerY.spinner('value', coords[1]);
+
+    if (mode === TILING_MODE) {
+      sector.setCross(coords);
+    }
   }
 
   function download() {

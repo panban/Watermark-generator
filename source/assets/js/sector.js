@@ -60,7 +60,7 @@
     var $this = $(this);
     var coords = getCoords($this);
 
-    my.triger(coords[0], coords[1]);
+    my.triger(coords);
     updateLinks($this);
 
     e.preventDefault();
@@ -79,9 +79,9 @@
         updateLinks($link);
       },
 
-      setCross: function(position) {
-        var height = (position.top * 100) / lineY.limit;
-        var width = (position.left * 100) / lineX.limit;
+      setCross: function(coords) {
+        var height = (coords[1] * 100) / lineY.limit;
+        var width = (coords[0] * 100) / lineX.limit;
 
         lineY.$element.css('height', height);
         lineX.$element.css('width', width);
@@ -92,9 +92,9 @@
         lineY.limit = limit[1];
       },
 
-      toggleMode: function(type) {
+      toggleMode: function(mode) {
 
-        if (type === 'tiling') {
+        if (mode === 'TILING_MODE') {
           crossMode = true;
           updateLinks();
           $cross.show();
@@ -107,7 +107,7 @@
       },
 
       // callbacks
-      triger: function() {}
+      triger: function(positoin) {}
     });
   }
 
