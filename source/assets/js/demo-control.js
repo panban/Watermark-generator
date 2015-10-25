@@ -1,7 +1,9 @@
 (function() {
   'use strict';
 
-  var my = {};
+  var my = {},
+      upd = {};
+
   var demoData = {
     '600x600': {
       path: '/demo/cat-wh.jpg',
@@ -29,6 +31,7 @@
       height: 1500
     }
   };
+
   var buttonImageEl = null,
       buttonWmEl = null,
       selectImageEl = null,
@@ -54,21 +57,32 @@
     return demoData[selectImageEl.val()];
   }
 
-  function attachEvent() {
-    buttonImageEl.on('click', function() {
+  function uploaded(type) {
+    if (type === 'image') {
       flag = true;
       easel.setImage(getImage());
-    });
-
-    buttonWmEl.on('click', function() {
-      if (!flag) {
-        return;
-      }
+      upd.image = true;
+    } else {
+      if (!flag) return;
 
       easel.setWatermark(getWatermark());
       easel.moveBySector([0, 0]);
       sector.setActive(0, 0);
-    });
+      upd.watermark = true;
+    }
+
+    if (upd.image) {
+      blocker.enable($('.locked-block').first());
+    }
+
+    if (upd.watermark) {
+      blocker.enable($('.locked-block'));
+    }
+  }
+
+  function attachEvent() {
+    buttonImageEl.on('click', uploaded.bind(null, 'image'));
+    buttonWmEl.on('click', uploaded.bind(null, 'watermark'));
   }
 
   function publicInterface() {

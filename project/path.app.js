@@ -7,7 +7,7 @@
         './source/assets/js/easel.js',
         './source/assets/js/sector.js',
         './source/assets/js/fileupload.js',
-        './source/assets/js/lock-interface.js',
+        './source/assets/js/blocker.js',
         './source/assets/js/app.js'
     ];
 

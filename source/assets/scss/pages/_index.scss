@@ -29,10 +29,19 @@
   }
 }
 
-.uploader-label {
-  font-size: 14px;
-  margin: 0 0 7px 0;
+.uploader-block {
+  margin: 0 0 23px 0;
+
+  &_label {
+    font-size: 14px;
+    margin: 0 0 7px 0;
+  }
+
+  &:last-child {
+    margin: 0;
+  }
 }
+
 
 .switcher {
   float: right;

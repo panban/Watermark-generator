@@ -4,9 +4,10 @@
   var my = {},
       $spinnerX = null,
       $spinnerY = null,
+      upd = {},
+      mode,
       SINGLE_MODE = 'SINGLE_MODE',
-      TILING_MODE = 'TILING_MODE',
-      mode;
+      TILING_MODE = 'TILING_MODE';
 
   init();
   attachEvents();
@@ -21,6 +22,7 @@
     fileupload.uploaded = uploaded;
     easel.getLimit = applyLimit;
     easel.getCoords = applyCoords;
+    blocker.disable([$('.locked-block')]);
 
     //==========================================
     // For test.
@@ -36,13 +38,24 @@
   }
 
   function uploaded(inputType, response) {
-
     if (inputType === 'image') {
+      upd.image = true;
+
       easel.setImage(response);
     } else {
+      upd.watemark = true;
+
       easel.setWatermark(response);
       easel.moveBySector(0, 0);
       sector.setActive(0, 0)
+    }
+
+    if (upd.image) {
+      blocker.enable($('.locked-block').first());
+    }
+
+    if (upd.watemark) {
+      blocker.enable($('.locked-block'));
     }
   }
 
@@ -102,7 +115,6 @@
   function toggleMode(e) {
     var $this = $(this),
         modePeer = $this.data('mode');
-    e.preventDefault();
 
     mode = (modePeer === 'single') ? SINGLE_MODE : TILING_MODE;
 
@@ -115,6 +127,7 @@
       .end()
       .addClass('switcher_item--active');
 
+    e.preventDefault();
   }
 
   function applyLimit(limit) {
