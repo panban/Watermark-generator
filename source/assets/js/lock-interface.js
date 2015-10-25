@@ -10,10 +10,10 @@
 
     function init() {
         var inputImg = $('.uploader_input[data-upload-type="image"]'),
-            inputWatermark = $('.uploader_input[data-upload-type="watermark"]');
+        inputWatermark = $('.uploader_input[data-upload-type="watermark"]');
 
-        inputImg.on('change', unlockWatermark);
-        inputWatermark.on('change', unlock);
+        inputImg.on('change', my.enable.bind(null, $('.locked-block').first()));
+        inputWatermark.on('change', my.enable.bind(null, $('.locked-block')));
     }
 
     function disable(selectors) {
@@ -40,19 +40,6 @@
         )
     }
 
-    function unlockWatermark() {
-        locking.enable([
-            $('.locked-block').first()
-        ]);
-
-    }
-
-    function unlock() {
-        locking.enable([
-            $('.locked-block')
-        ]);
-
-    }
 
 
     function publicInterface() {
