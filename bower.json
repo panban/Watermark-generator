@@ -9,7 +9,8 @@
   "dependencies": {
     "jquery": "1.11.3",
     "blueimp-file-upload": "~9.11.2",
-    "jquery-ui": "~1.11.4"
+    "jquery-ui": "~1.11.4",
+    "blockUI": "blockui#*"
   },
   "devDependencies": {}
 }

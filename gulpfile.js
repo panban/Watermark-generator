@@ -3,12 +3,12 @@ var $ = {
   config: require('./project/config.js'),
   path: {
     system: require('./project/path.system.js'),
-    foundation: require('./project/path.foundation.js'),
     app: require('./project/path.app.js'),
     sass: require('./project/path.sass.js'),
     template: require('./project/path.template.js'),
     task: require('./project/path.task.js')
   },
+  shell: require('gulp-shell'),
   browserSync: require('browser-sync'),
   sequence: require('run-sequence'),
   rimraf: require('rimraf'),
@@ -30,8 +30,7 @@ $.path.task.forEach(function(taskPath) {
 $.gulp.task('default', function() {
   $.sequence(
     [
-      'js:process',
-      'js:foundation',
+      'webpack:process',
       'scss:process',
       'template:jade',
       'copy:image',
@@ -49,8 +48,7 @@ $.gulp.task('build', function(cb) {
     'service:clean',
     'js:lint',
     [
-      'js:release',
-      'js:foundation',
+      'webpack:release',
       'scss:release',
       'template:jade',
       'copy:image',
