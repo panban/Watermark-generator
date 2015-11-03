@@ -2,7 +2,7 @@
     'use strict';
 
     var app = [
-        //'./source/assets/js/demo-control.js',
+        // './source/assets/js/demo-control.js',
         './source/assets/js/range.js',
         './source/assets/js/easel.js',
         './source/assets/js/sector.js',

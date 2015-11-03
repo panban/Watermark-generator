@@ -316,10 +316,6 @@
         var position = [context.coords],
             settings = {};
 
-        if (mode === TILING_MODE) {
-          position.push(tiling.gutter);
-        }
-
         settings = {
           imagePath: image.path,
           watermarkPath: watermark.path,
@@ -327,6 +323,14 @@
           opacity: opacity,
           position: position
         };
+
+        if (mode === TILING_MODE) {
+          position.push(tiling.gutter);
+          settings.count = {
+            horizont: tiling.count[0],
+            vertical: tiling.count[1]
+          };
+        }
 
         return settings;
       },
