@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__.'/../phplibs/autoload.php';
 use \WideImage\WideImage;
+error_reporting(E_ALL & ~E_NOTICE);
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -28,15 +29,29 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     list($width, $height) = getimagesize($watermarkPath);
     //$watermark = $watermark->resize(($width * $scale));
 	
-	
-	if ($width > $image->getWidth()) {
+	/*
+	if ($width > $image->getWidth() && $image->getWidth()>$image->getHeight()) {
 		$watermark = $watermark->resize($image->getWidth(), $height*$image->getWidth()/$width);
 		} elseif ($height > $image->getHeight()) {
 		$watermark = $watermark->resize($width*$image->getHeight()/$height, $image->getHeight());
 		}
+	*/
+	if ($width > $image->getWidth() || $height > $image->getHeight()) {
+
+      $innerRatio = $width / $height;
+      $outerRatio = $image->getWidth()/$image->getHeight();
+
+      if ($outerRatio < $innerRatio) {
+       $watermark = $watermark->resize($image->getWidth(), $image->getWidth()/$innerRatio);
+      } else {
+       $watermark = $watermark->resize($innerRatio*$image->getHeight(), $image->getHeight());
+	   
+      }
+    }
 	
-	list($width, $height) = getimagesize($watermarkPath);
-	
+	$width = $watermark->getWidth();
+	$height = $watermark->getHeight();
+		
 	if ($image->getWidth() > 653) {	
 		$maxX = 653;
 		} else {
@@ -59,13 +74,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 						$gutterY = $coords[1][1]*$image->getHeight()/($maxX/$ratio);
 						$x = $coords[0][0]*$image->getWidth()/$maxX + $gutterX;
 						$y = $coords[0][1]*$image->getHeight()/($maxX/$ratio)+ $gutterY;
+							
 					} else {
 						$gutterX = $coords[1][0]*$image->getWidth()/($maxY*$ratio);
 						$gutterY = $coords[1][1]*$image->getHeight()/$maxY;
 						$x = $coords[0][0]*$image->getWidth()/($maxY*$ratio) + $gutterX;
 						$y = $coords[0][1]*$image->getHeight()/$maxY + $gutterY;
+						
 					}
-				
+			
 		for ($i=0; $i < $count["horizont"]; $i++) {
 			for ($j=0; $j < $count["vertical"]; $j++) {
 						$image = $image->merge($watermark, $x+($gutterX+$width)*$i, $y+($gutterY+$height)*$j, $opacity);
@@ -81,8 +98,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	}
 
     $image->saveToFile('result.jpg');
-    header('Content-Disposition: attachment; filename=result.jpg');
-    readfile('result.jpg');
+    //header('Content-Disposition: attachment; filename=result.jpg');
+    //readfile(__DIR__.'/result.jpg');
     exit;
 
 

@@ -157,7 +157,11 @@
     $.ajax({
       url: '/php/download.php',
       type: 'POST',
-      data: JSONSettings
+      data: JSONSettings,
+      success: function() {
+                  //window.open('./php/result.jpg','_blank');
+                  location.href = 'php/show.php';
+                }
     });
   }
 
